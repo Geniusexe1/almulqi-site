@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Self-driving racing car — Abdullah Al Mulqi</title>
+<meta name="description" content="A Raspberry Pi car that follows a line to the grid with a neural network, waits for the lights, then hands over to a PID controller on ultrasonic range to race the track.">
+<link rel="canonical" href="https://almulqi.com/projects/racing-car.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Self-driving racing car">
+<meta property="og:description" content="Two control paradigms in one vehicle: a CNN drives to the grid, a PID loop races the track.">
+<meta property="og:image" content="https://almulqi.com/assets/og/cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23e6e7e1'/><path d='M3 13V3h10' fill='none' stroke='%23151814' stroke-width='1.6'/><circle cx='11' cy='11' r='2' fill='%23855614'/></svg>">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script>
+/* Add js before first paint so animated content never flashes in and then
+   collapses. The timer is a failsafe: if site.js never runs (blocked, 404,
+   parse error) it strips the class again so the page is readable rather than
+   invisible. */
+(function(d){d.className+=' js';setTimeout(function(){
+  if(d.className.indexOf('js-ready')<0){d.classList.remove('js');}
+},2500);})(document.documentElement);
+</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="../">
+      <svg class="axis-mark" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+        <path d="M3 15 V3" stroke="#3f9d4a" stroke-width="1.8"/>
+        <path d="M3 15 H15" stroke="#c0442f" stroke-width="1.8"/>
+        <circle cx="3" cy="15" r="1.8" fill="currentColor"/>
+      </svg>
+      Abdullah Al Mulqi
+    </a>
+    <nav class="site-nav" aria-label="Sections">
+      <a href="../#work" class="nav-keep">Work</a>
+      <a href="../#skills">Skills</a>
+      <a href="../#record">Record</a>
+      <a href="../#contact" class="nav-keep">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="case-hero">
+    <div class="wrap">
+      <p class="label lift" style="--delay:80ms"><a href="../#work" style="color:inherit">Work</a> / ME209 Mechatronics System Design / 2025</p>
+      <h1 class="lift" style="--delay:180ms">Self-driving racing car</h1>
+      <p class="lede lift" style="--delay:300ms">
+        A Raspberry Pi car that drives itself to the starting grid by following a
+        white line, waits for the lights, and then races — under a completely
+        different controller. I built the whole thing, mechanics to software. The
+        interesting part is not either controller. It is the handoff between them.
+      </p>
+
+      <dl class="case-meta lift" style="--delay:420ms">
+        <div><dt>Course</dt><dd>ME209, Mechatronics System Design</dd></div>
+        <div><dt>My role</dt><dd>Built it solo — vehicle, vision, control</dd></div>
+        <div><dt>Platform</dt><dd>RC chassis, Raspberry Pi</dd></div>
+        <div><dt>Sensing</dt><dd>Camera + ultrasonic range</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <figure class="media reveal " data-scrub>
+    <picture>
+      <source type="image/avif" srcset="../assets/img/car-bench-480.avif 480w, ../assets/img/car-bench-960.avif 960w, ../assets/img/car-bench-1920.avif 1920w" sizes="(max-width:1100px) 92vw, 1100px">
+      <source type="image/webp" srcset="../assets/img/car-bench-480.webp 480w, ../assets/img/car-bench-960.webp 960w, ../assets/img/car-bench-1920.webp 1920w" sizes="(max-width:1100px) 92vw, 1100px">
+      <img src="../assets/img/car-bench-960.jpg" srcset="../assets/img/car-bench-480.jpg 480w, ../assets/img/car-bench-960.jpg 960w, ../assets/img/car-bench-1920.jpg 1920w" sizes="(max-width:1100px) 92vw, 1100px"
+           width="5712" height="4284" alt="The self-driving car on a bench: a Raspberry Pi, motor drivers and ultrasonic sensors wired onto a flat chassis, pliers beside it." loading="lazy" decoding="async"
+           style="background-color:#807a71">
+    </picture>
+    <figcaption>Raspberry Pi, motor drivers, ultrasonic range finders.</figcaption>
+  </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap case-body">
+
+      <div class="prose" data-scrub>
+
+        <h2 class="reveal">The problem</h2>
+        <p>
+          The run has two halves that look like one task and are not. First the car has
+          to find its way to the starting grid by following a white line painted on the
+          floor — a vision problem, low speed, where the only thing that matters is
+          staying on a stripe. Then the lights go green and it has to race a walled
+          track as fast as it can without touching anything — a control problem, high
+          speed, where the line is gone and the walls are what you have.
+        </p>
+
+        <h2 class="reveal">What I built</h2>
+        <p>
+          For the approach, a convolutional network trained in PyTorch takes the camera
+          image and outputs a steering command directly. Line following is genuinely
+          easier to learn than to specify: the classic approach is thresholding and
+          centroid-finding, and it breaks on shadows, glare, tape joins and the moment
+          the line leaves frame on a tight corner. A network trained on frames from the
+          actual floor under the actual lighting handles all of that without me
+          enumerating the cases.
+        </p>
+        <p>
+          I also built the vision that watches for the start signal, using OpenCV to
+          detect the traffic light state and track signage — which is what triggers the
+          transition from approach to race.
+        </p>
+        <p>
+          For the race itself, ultrasonic sensors measure distance to the walls and a
+          PID controller steers to hold the car in the middle of the corridor. The
+          error is the difference between the left and right readings; the controller
+          drives that difference to zero.
+        </p>
+
+        <h2 class="reveal">Key technical decisions</h2>
+
+        <p><strong>Two controllers, because it is two problems.</strong>
+          It is tempting to train one network to do the whole run. It would have been
+          worse. A learned controller is the right tool when the rule is hard to write
+          down and easy to demonstrate — which describes line following. A PID loop is
+          the right tool when you have a clean scalar error signal and need a fast,
+          predictable, tunable response — which describes wall centring at speed. Using
+          a network for the racing half would have meant collecting training data at
+          racing speed, and it would have been slower and less predictable than three
+          gains.
+        </p>
+
+        <p><strong>Tuning is where the theory stops.</strong>
+          The gains that behave on paper oscillate on carpet. Too much proportional gain
+          and the car saws down the straight, hitting both walls in turn; too little and
+          it clips the inside of every corner. Derivative gain damps the sawing but
+          amplifies ultrasonic noise, and ultrasonic sensors are noisy — they return
+          nothing at all off an angled wall, because the pulse reflects away instead of
+          coming back. Handling a missing reading, rather than treating it as a distance
+          of zero, mattered more than any of the gains.
+        </p>
+
+        <h2 class="reveal">What it taught me</h2>
+        <p>
+          This was the project that taught me to pick the tool for the sub-problem
+          instead of for the project. A single approach applied uniformly is tidier to
+          describe and worse to drive. It also gave me the first real instance of
+          something that has been true on everything since: the sensor's failure mode,
+          not its accuracy, is what you end up designing around.
+        </p>
+
+      </div>
+
+      <aside class="case-aside">
+        <div class="spec reveal">
+          <h3>Vehicle</h3>
+          <dl>
+            <div class="row"><dt>Compute</dt><span class="fill"></span><dd>Raspberry Pi</dd></div>
+            <div class="row"><dt>Vision</dt><span class="fill"></span><dd>single camera</dd></div>
+            <div class="row"><dt>Range</dt><span class="fill"></span><dd>ultrasonic</dd></div>
+          </dl>
+        </div>
+        <div class="spec reveal">
+          <h3>Software</h3>
+          <dl>
+            <div class="row"><dt>Approach</dt><span class="fill"></span><dd>CNN, PyTorch</dd></div>
+            <div class="row"><dt>Start signal</dt><span class="fill"></span><dd>OpenCV</dd></div>
+            <div class="row"><dt>Race</dt><span class="fill"></span><dd>PID</dd></div>
+            <div class="row"><dt>Languages</dt><span class="fill"></span><dd>C, Python</dd></div>
+          </dl>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Build</h2>
+        <span class="ref">Photos &amp; video</span>
+      </div>
+      <div class="media-grid clip-grid">
+        <figure class="clip reveal">
+    <video src="../assets/video/car-racing.mp4" poster="../assets/video/car-racing-poster.jpg"
+           width="540" height="960" muted loop playsinline preload="none"
+           aria-label="The self-driving car racing around a walled circuit, taking the corners without touching the barriers." style="background-color:#a39993"></video>
+    <figcaption>The race phase: PID on ultrasonic range, holding the middle of the corridor.</figcaption>
+  </figure>
+        <figure class="clip reveal">
+    <video src="../assets/video/car-line.mp4" poster="../assets/video/car-line-poster.jpg"
+           width="540" height="960" muted loop playsinline preload="none"
+           aria-label="The car following a white line across a floor towards the starting grid." style="background-color:#9e9b94"></video>
+    <figcaption>The approach phase: a convolutional network steering from the camera alone.</figcaption>
+  </figure>
+        <figure class="media reveal " data-scrub>
+    <picture>
+      <source type="image/avif" srcset="../assets/img/car-floor-480.avif 480w, ../assets/img/car-floor-960.avif 960w, ../assets/img/car-floor-1920.avif 1920w" sizes="(max-width:900px) 92vw, 46vw">
+      <source type="image/webp" srcset="../assets/img/car-floor-480.webp 480w, ../assets/img/car-floor-960.webp 960w, ../assets/img/car-floor-1920.webp 1920w" sizes="(max-width:900px) 92vw, 46vw">
+      <img src="../assets/img/car-floor-960.jpg" srcset="../assets/img/car-floor-480.jpg 480w, ../assets/img/car-floor-960.jpg 960w, ../assets/img/car-floor-1920.jpg 1920w" sizes="(max-width:900px) 92vw, 46vw"
+           width="4284" height="5712" alt="The self-driving car standing on a tiled floor, its wiring loom and sensor mast clearly visible." loading="lazy" decoding="async"
+           style="background-color:#94918c">
+    </picture>
+  </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="dim reveal"><span class="dim-value"><a href="caricature-robot.html">Next — Caricature drawing robot</a></span></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span><a href="../">Abdullah Al Mulqi</a> — Daejeon, Korea</span>
+    <span class="rev">Drawn to scale. Every dimension on this site is measured.</span>
+  </div>
+</footer>
+
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

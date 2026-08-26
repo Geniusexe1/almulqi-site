@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caricature drawing robot &mdash; Abdullah Al Mulqi</title>
+<meta name="description" content="A scrapped 3D printer rebuilt as a portrait plotter. A web app distorts your face, Dijkstra orders the strokes into efficient G-code, and an ESP32 draws it.">
+<link rel="canonical" href="https://almulqi.com/projects/caricature-robot.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Caricature drawing robot">
+<meta property="og:description" content="A dead 3D printer, a pen on a servo, and a shortest-path algorithm deciding what order to draw a face in.">
+<meta property="og:image" content="https://almulqi.com/assets/img/caricature-machine-1920.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23eceee6'/><path d='M3 13V3h10' fill='none' stroke='%230e110c' stroke-width='1.6'/><circle cx='11' cy='11' r='2' fill='%237a4b0d'/></svg>">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script>
+/* Add js before first paint so animated content never flashes in and then
+   collapses. The timer is a failsafe: if site.js never runs (blocked, 404,
+   parse error) it strips the class again so the page is readable rather than
+   invisible. */
+(function(d){d.className+=' js';setTimeout(function(){
+  if(d.className.indexOf('js-ready')<0){d.classList.remove('js');}
+},2500);})(document.documentElement);
+</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="../">
+      <svg class="axis-mark" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+        <path d="M3 15 V3" stroke="#3f9d4a" stroke-width="1.8"/>
+        <path d="M3 15 H15" stroke="#c0442f" stroke-width="1.8"/>
+        <circle cx="3" cy="15" r="1.8" fill="currentColor"/>
+      </svg>
+      Abdullah Al Mulqi
+    </a>
+    <nav class="site-nav" aria-label="Sections">
+      <a href="../#work" class="nav-keep">Work</a>
+      <a href="../#skills">Skills</a>
+      <a href="../#journey">Journey</a>
+      <a href="../#contact" class="nav-keep">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="case-hero">
+    <div class="wrap">
+      <p class="label lift" style="--delay:80ms"><a href="../#work" style="color:inherit">Work</a> / Micro-Robotics club / 2025</p>
+      <h1 class="lift" style="--delay:180ms">Caricature drawing robot</h1>
+      <p class="lede lift" style="--delay:300ms">
+        A broken 3D printer, stripped for its steppers and rails, rebuilt as a machine
+        that draws your face back at you. I worked on the software: the app that turns a
+        photo into a caricature, and the part that decides what order to draw it in.
+      </p>
+
+      <dl class="case-meta lift" style="--delay:420ms">
+        <div><dt>Team</dt><dd>KAIST Micro-Robotics club (MR)</dd></div>
+        <div><dt>My role</dt><dd>Software &mdash; app, path planning, firmware link</dd></div>
+        <div><dt>Machine</dt><dd>Salvaged 3D printer gantry</dd></div>
+        <div><dt>Controller</dt><dd>ESP32</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <figure class="media reveal" data-scrub>
+        <picture>
+          <source type="image/avif" srcset="../assets/img/caricature-machine-480.avif 480w, ../assets/img/caricature-machine-960.avif 960w, ../assets/img/caricature-machine-1920.avif 1920w" sizes="(max-width:1100px) 92vw, 1100px">
+          <source type="image/webp" srcset="../assets/img/caricature-machine-480.webp 480w, ../assets/img/caricature-machine-960.webp 960w, ../assets/img/caricature-machine-1920.webp 1920w" sizes="(max-width:1100px) 92vw, 1100px">
+          <img src="../assets/img/caricature-machine-960.jpg"
+               srcset="../assets/img/caricature-machine-480.jpg 480w, ../assets/img/caricature-machine-960.jpg 960w, ../assets/img/caricature-machine-1920.jpg 1920w"
+               sizes="(max-width:1100px) 92vw, 1100px"
+               width="3024" height="4032"
+               alt="The drawing machine on a table with a finished line-drawn portrait beside it, and a hand giving a thumbs up."
+               loading="lazy" decoding="async"
+               style="background-color:#7e7570;object-position:50% 42%">
+        </picture>
+        <figcaption>The plotter, and something it drew.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap case-body">
+
+      <div class="prose" data-scrub>
+
+        <h2 class="reveal">The problem</h2>
+        <p>
+          The club wanted a robot that draws caricatures of people at events. The
+          mechanical half was mostly a salvage job &mdash; a dead 3D printer already
+          contains two precise linear axes and the motors to drive them, which is a
+          plotter with the extruder removed. We kept the steppers and rails and replaced
+          the hot end with a pen on a servo, so the third axis is not a height at all.
+          It is a binary: pen down, pen up.
+        </p>
+        <p>
+          The hard half was software. Turning a photograph into something a pen can draw
+          means turning a grid of pixels into a set of strokes &mdash; and then, crucially,
+          deciding what order to draw those strokes in.
+        </p>
+
+        <h2 class="reveal">What I built</h2>
+        <p>
+          A web app that takes a photo, applies the caricature distortion &mdash;
+          exaggerating the features the way a street artist would &mdash; and reduces the
+          result to line work. That line work becomes a set of paths, and the paths become
+          G-code the machine can execute.
+        </p>
+        <p>Between those last two steps is the part I find most interesting.</p>
+
+        <h2 class="reveal">Key technical decisions</h2>
+
+        <p><strong>Stroke order is a graph problem.</strong>
+          A portrait reduced to line work is a few hundred disconnected strokes. The pen
+          has to draw each of them, and between any two it has to lift, travel and drop
+          &mdash; and travel time is time the machine spends making no marks at all. Drawn
+          in the order the strokes happen to come out of the image processing, the pen
+          spends much of the run flying back and forth across the page.
+        </p>
+        <p>
+          So I treated the strokes as nodes in a graph, with edge weights being the travel
+          distance between one stroke's end and the next one's start, and ran
+          <strong>Dijkstra</strong> over it to order them. The output is G-code where
+          consecutive strokes are near each other, the pen-up moves are short, and the
+          drawing finishes noticeably faster &mdash; for the same picture, the same number
+          of marks, and no change to the machine at all.
+        </p>
+
+        <div class="figure-note reveal-x">
+          The satisfying part: this is a pure software change with a mechanical result.
+          The plotter is not faster. The path is shorter.
+        </div>
+
+        <p><strong>Open loop, so the geometry has to be exact.</strong>
+          The steppers have no encoders &mdash; the machine has no idea where the pen
+          actually is, only how many steps it has commanded. That means every millimetre
+          in the drawing has to map to an exact step count, and any error accumulates
+          silently across the whole portrait rather than being corrected. Getting the
+          step-to-distance calibration right for each axis is what separates a face from a
+          sheared face.
+        </p>
+
+        <p><strong>The pen is a servo, so the firmware stays simple.</strong>
+          Standard G-code expects a continuous Z axis. Ours has two states. Rather than
+          fight the convention, the ESP32 firmware interprets Z above a threshold as
+          &ldquo;pen up&rdquo; and below it as &ldquo;pen down&rdquo;, so ordinary G-code
+          from ordinary tools still runs on it unmodified.
+        </p>
+
+        <h2 class="reveal">What it taught me</h2>
+        <p>
+          That the algorithm is often the cheapest place to find performance. We could
+          have chased faster feed rates, lighter carriages, stiffer belts &mdash; all real
+          work, all requiring parts. Reordering a list made the machine visibly quicker in
+          an afternoon.
+        </p>
+        <p>
+          It was also my first time owning the whole path from a user action to a physical
+          result: someone's photo goes in one end, a pen moves at the other, and every
+          layer in between is something I had to make work with the layers on either side
+          of it.
+        </p>
+
+      </div>
+
+      <aside class="case-aside">
+        <div class="spec reveal">
+          <h3>Machine</h3>
+          <dl>
+            <div class="row"><dt>Base</dt><span class="fill"></span><dd>salvaged printer</dd></div>
+            <div class="row"><dt>Axes</dt><span class="fill"></span><dd>X, Y steppers</dd></div>
+            <div class="row"><dt>Pen</dt><span class="fill"></span><dd>servo, up/down</dd></div>
+            <div class="row"><dt>Control</dt><span class="fill"></span><dd>open loop</dd></div>
+            <div class="row"><dt>Board</dt><span class="fill"></span><dd>ESP32</dd></div>
+          </dl>
+        </div>
+        <div class="spec reveal">
+          <h3>Software</h3>
+          <dl>
+            <div class="row"><dt>Front end</dt><span class="fill"></span><dd>React</dd></div>
+            <div class="row"><dt>Ordering</dt><span class="fill"></span><dd>Dijkstra</dd></div>
+            <div class="row"><dt>Output</dt><span class="fill"></span><dd>G-code</dd></div>
+          </dl>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Build</h2>
+        <span class="ref">The machine and its output</span>
+      </div>
+      <div class="media-grid clip-grid">
+        <figure class="clip reveal">
+          <video src="../assets/video/caricature-drawing.mp4" poster="../assets/video/caricature-drawing-poster.jpg"
+                 width="540" height="960" muted loop playsinline preload="none"
+                 aria-label="The pen plotter drawing a portrait, its gantry moving across the paper."
+                 style="background-color:#666561"></video>
+          <figcaption>A dead 3D printer, drawing.</figcaption>
+        </figure>
+        <figure class="media reveal" data-scrub>
+          <picture>
+            <source type="image/avif" srcset="../assets/img/caricature-output-480.avif 480w, ../assets/img/caricature-output-960.avif 960w, ../assets/img/caricature-output-1600.avif 1600w" sizes="(max-width:900px) 92vw, 46vw">
+            <source type="image/webp" srcset="../assets/img/caricature-output-480.webp 480w, ../assets/img/caricature-output-960.webp 960w, ../assets/img/caricature-output-1600.webp 1600w" sizes="(max-width:900px) 92vw, 46vw">
+            <img src="../assets/img/caricature-output-960.jpg"
+                 srcset="../assets/img/caricature-output-480.jpg 480w, ../assets/img/caricature-output-960.jpg 960w, ../assets/img/caricature-output-1600.jpg 1600w"
+                 sizes="(max-width:900px) 92vw, 46vw"
+                 width="1600" height="901"
+                 alt="The pen plotter on a workbench with two finished line portraits standing up behind it."
+                 loading="lazy" decoding="async"
+                 style="background-color:#757171;object-position:50% 42%">
+          </picture>
+          <figcaption>Two faces, straight off the machine.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="dim reveal"><span class="dim-value"><a href="robonexus.html">Next &mdash; ROBONEXUS</a></span></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span><a href="../">Abdullah Al Mulqi</a> &mdash; Daejeon, Korea</span>
+  </div>
+</footer>
+
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

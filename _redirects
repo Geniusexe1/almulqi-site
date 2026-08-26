@@ -1,0 +1,3 @@
+# Cloudflare Pages redirects. The www host is added as a second custom domain
+# and sent here so there is one canonical URL.
+https://www.almulqi.com/*  https://almulqi.com/:splat  301

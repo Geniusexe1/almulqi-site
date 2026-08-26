@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ROBONEXUS — Abdullah Al Mulqi</title>
+<meta name="description" content="A mecanum-wheeled capture-the-flag robot: mechanical design, Gazebo simulation, and a YOLO flag detector trained entirely on synthetic Unity renders. Project lead, ₩6,000,000 secured.">
+<link rel="canonical" href="https://almulqi.com/projects/robonexus.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ROBONEXUS — a capture-the-flag robot">
+<meta property="og:description" content="Mecanum drive, a chain-driven claw carousel, and a flag detector trained on 5,001 synthetic renders because no footage of the venue exists.">
+<meta property="og:image" content="https://almulqi.com/assets/og/cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23e6e7e1'/><path d='M3 13V3h10' fill='none' stroke='%23151814' stroke-width='1.6'/><circle cx='11' cy='11' r='2' fill='%23855614'/></svg>">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script>
+/* Add js before first paint so animated content never flashes in and then
+   collapses. The timer is a failsafe: if site.js never runs (blocked, 404,
+   parse error) it strips the class again so the page is readable rather than
+   invisible. */
+(function(d){d.className+=' js';setTimeout(function(){
+  if(d.className.indexOf('js-ready')<0){d.classList.remove('js');}
+},2500);})(document.documentElement);
+</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="../">
+      <svg class="axis-mark" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+        <path d="M3 15 V3" stroke="#3f9d4a" stroke-width="1.8"/>
+        <path d="M3 15 H15" stroke="#c0442f" stroke-width="1.8"/>
+        <circle cx="3" cy="15" r="1.8" fill="currentColor"/>
+      </svg>
+      Abdullah Al Mulqi
+    </a>
+    <nav class="site-nav" aria-label="Sections">
+      <a href="../#work" class="nav-keep">Work</a>
+      <a href="../#skills">Skills</a>
+      <a href="../#record">Record</a>
+      <a href="../#contact" class="nav-keep">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="case-hero">
+    <div class="wrap">
+      <p class="label lift" style="--delay:80ms"><a href="../#work" style="color:inherit">Work</a> / Micro-Robotics club / 2025—2026</p>
+      <h1 class="lift" style="--delay:180ms">ROBONEXUS</h1>
+      <p class="lede lift" style="--delay:300ms">
+        A mecanum-wheeled robot for a capture-the-flag competition, and the software
+        that lets it play the first 45 seconds without a driver. I led the team,
+        designed the machine, built the simulation it was developed in, and trained
+        the detector that finds the flags.
+      </p>
+
+      <dl class="case-meta lift" style="--delay:420ms">
+        <div><dt>My role</dt><dd>Project lead — mechanical design, simulation, perception</dd></div>
+        <div><dt>Team</dt><dd>KAIST Micro-Robotics club (MR)</dd></div>
+        <div><dt>Funding</dt><dd>₩6,000,000, secured on proposal</dd></div>
+        <div><dt>Status</dt><dd>In development</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <figure class="media reveal " data-scrub>
+    <img src="../assets/img/robot-iso.png" width="1700" height="1300" alt="Three-quarter orthographic render of the ROBONEXUS robot: mecanum wheels, side panels, chain sprockets and the stereo camera, generated from its own URDF and CAD meshes."
+         loading="lazy" decoding="async" style="background:#dcded5">
+    <figcaption>The machine, rendered from its own URDF and CAD meshes. 400 &times; 419 mm, 439 mm tall, 9.51 kg of aluminium.</figcaption>
+  </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap case-body">
+
+      <div class="prose" data-scrub>
+
+        <h2 class="reveal">The problem</h2>
+        <p>
+          Two teams, two robots each, three minutes. You score by carrying flags into
+          your own scoring zones: one point for your colour, <strong>three points for
+          an opponent's</strong>. Knock a flag over instead of collecting it and you
+          lose two. The first <strong>45 seconds are fully autonomous</strong> — no
+          driver, no radio, nothing but what the robot decides for itself.
+        </p>
+        <p>
+          The arena is a four-metre square split down the middle by a barrier. There
+          are exactly two ways across, one at each end, and each opening is
+          600&nbsp;mm wide with a roof 500&nbsp;mm above the floor. That single fact
+          shapes the whole machine: every high-value run — every steal — has to fit
+          through a hole barely wider than the robot.
+        </p>
+
+        <div class="figure-note reveal-x">
+          The robot is <b>400 × 419 mm</b> and its diagonal is <b>580 mm</b>. A gate is
+          <b>600 mm</b>. So it fits going straight and does not fit turning — which
+          means a conventional planner, which models a robot as a circle it can rotate
+          freely inside, declares the two halves of the arena disconnected and gives up.
+        </div>
+
+        <h2 class="reveal">What I built</h2>
+        <p>
+          A four-wheel mecanum platform — it can strafe, which matters when you are
+          lining up on a flag in a space too tight to turn around in. The flags are
+          carried by three claws on a chain carousel that runs around the robot's
+          perimeter, so it can hold more than one at a time and present an empty claw
+          to whatever it drives up to next.
+        </p>
+        <p>
+          I designed the chassis, the claws and the carousel in CAD, then built the
+          whole thing in Gazebo — arena, robot, flags, physics — so the navigation and
+          perception could be developed and tested before any aluminium was cut. On
+          top of that sits the autonomy: an A* planner over a map of the arena, a
+          stereo camera for finding and ranging flags, and a state machine that decides
+          what to go for.
+        </p>
+
+        <h2 class="reveal">Key technical decisions</h2>
+
+        <p><strong>The gate is a configuration problem, not a position problem.</strong>
+          A claw sitting on the top run of the chain stands 574&nbsp;mm tall, and the
+          gate roof is at 500&nbsp;mm — so the robot physically cannot cross with the
+          carousel in the wrong position, no matter where it is on the floor. Opening
+          the jaws drops the worst case to 469&nbsp;mm and every chain position clears.
+          So the planner does not treat a gate cell as "free"; it treats it as
+          <em>free in the right configuration</em>, with a precondition the executor
+          has to satisfy before it is allowed to drive through. The planner therefore
+          cannot produce a route the robot is incapable of physically driving, which is
+          the failure worth designing against.
+        </p>
+
+        <p><strong>The claws have to open to get out of their own way.</strong>
+          The bottom run of the chain is only 81&nbsp;mm above the floor and a shut
+          claw is 135&nbsp;mm tall — so a claw travelling along the bottom would drag
+          through the floor. The carousel controller computes a safe closure from each
+          claw's current height and clamps the command, so the claws open themselves as
+          they come round the bottom. Getting the sign of that check backwards protects
+          the top run and leaves the bottom unguarded, and the shut claws dig in and
+          jack the entire robot off its wheels. I know because that is exactly what
+          happened.
+        </p>
+
+        <p><strong>The flag detector is trained on data that does not exist.</strong>
+          There is no footage of the competition venue — nobody on the team has seen
+          it. So instead of collecting real images, I generated them: <strong>5,001
+          labelled renders in Unity</strong>, flags scattered through a synthetic arena
+          under varied lighting and viewpoints, exported straight into YOLO format.
+          A YOLOv8n trained on that reaches <strong>mAP@50 of 0.940</strong> and
+          mAP@50-95 of 0.847 on a held-out test split.
+        </p>
+
+        <p><strong>I deliberately deleted a class from the dataset.</strong>
+          The renders included a third class meant to stand in for opposing robots, but
+          the stand-ins were untextured grey blobs. Nothing on the real field looks like
+          them — while plenty of the <em>arena</em> does: grey pipes, grey walls, grey
+          flag bases. A detector taught that "grey convex lump" is an obstacle fires on
+          the barrier every single frame, and a phantom obstacle in the middle of the
+          map is worse than no obstacle at all, because the planner already knows
+          exactly where the fixed geometry is. Dropping the class does not throw the
+          objects away — they stay in every image, unlabelled, which is precisely how
+          you teach a detector that a grey lump is not a flag.
+        </p>
+
+        <div class="figure-note reveal-x">
+          It transfers. Run against frames from the robot's own simulated camera — a
+          different renderer, different textures, different lighting from anything it
+          trained on — it returns <b>40 detections at 0.74–0.80 mean confidence</b> and
+          fires on <b>none</b> of the grey pipes.
+        </div>
+
+        <p><strong>The one false positive was fixed by shape, not confidence.</strong>
+          Tested against frames with no flags placed at all — so every detection is
+          wrong by definition — the model produced four false positives in 24 frames,
+          all on the purple arc painted on the arena floor. The obvious fix is to raise
+          the confidence threshold. The better fix was a shape gate: a flag is taller
+          than it is wide, a painted arc is not. Gating on aspect ratio removes
+          <strong>all four</strong> false positives while keeping 29 of 36 true
+          detections — five points more recall than a confidence threshold that
+          achieves the same zero. And it costs nothing at range, whereas a confidence
+          gate specifically discards the <em>distant</em> flags, which are the ones
+          worth knowing about early.
+        </p>
+        <p>
+          Setting that threshold taught me something I keep coming back to: my first
+          value was reasoned from the objects themselves and it only caught two of the
+          four. An arc curving into the corner of a frame does not produce a flat
+          bounding box — one came out nearly square. <strong>The shape of a box is not
+          the shape of the thing inside it.</strong> The number that worked came from
+          sweeping it against real detections, not from thinking harder.
+        </p>
+
+        <h2 class="reveal">What it taught me</h2>
+        <p>
+          The bug I am proudest of finding had no symptoms. Gazebo silently discards
+          the mount transform on a stereo camera sensor — so the pair was rendering
+          from the robot's origin, level, while the software believed it sat 300&nbsp;mm
+          up and tilted 29° down. Nothing errors. The images are of a real place and the
+          transform tree is self-consistent, so both halves look correct in isolation.
+          Range estimates still came out right, because disparity does not care about
+          pose. <strong>Only bearing was wrong</strong> — by 275 pixels, about 32°.
+        </p>
+        <p>
+          The test that caught it: take a flag's known true position, push it through
+          the transform tree into the camera frame, project it with the camera's own
+          published intrinsics, and compare to the pixel the flag actually lands on.
+          No amount of checking the stereo pair would ever have found it, because both
+          cameras were wrong together. Since then I write the check that compares a
+          prediction against ground truth before I trust anything I cannot see.
+        </p>
+        <p>
+          The other lesson was cheaper and more embarrassing: the CAD export assigned
+          every part the density of steel and reported a 30.6&nbsp;kg robot. The machine
+          is aluminium. Recomputing each part's mass from its mesh volume, with
+          catalogue figures for the motors and wheels, gives <strong>9.51&nbsp;kg</strong>
+          — a third of what the software believed. Every simulated result before that
+          was quietly wrong. Now I check density before I trust an exported mass.
+        </p>
+
+      </div>
+
+      <aside class="case-aside">
+        <div class="spec reveal">
+          <h3>Machine</h3>
+          <dl>
+            <div class="row"><dt>Footprint</dt><span class="fill"></span><dd>400 × 419 mm</dd></div>
+            <div class="row"><dt>Height</dt><span class="fill"></span><dd>439 mm</dd></div>
+            <div class="row"><dt>Mass</dt><span class="fill"></span><dd>9.51 kg</dd></div>
+            <div class="row"><dt>Drive</dt><span class="fill"></span><dd>4 × mecanum</dd></div>
+            <div class="row"><dt>Carousel</dt><span class="fill"></span><dd>3 claws, #40 chain</dd></div>
+            <div class="row"><dt>Gate margin</dt><span class="fill"></span><dd>90 mm / side</dd></div>
+          </dl>
+        </div>
+        <div class="spec reveal">
+          <h3>Perception</h3>
+          <dl>
+            <div class="row"><dt>Model</dt><span class="fill"></span><dd>YOLOv8n @ 640</dd></div>
+            <div class="row"><dt>Dataset</dt><span class="fill"></span><dd>5,001 renders</dd></div>
+            <div class="row"><dt>Source</dt><span class="fill"></span><dd>Unity Perception</dd></div>
+            <div class="row"><dt>mAP@50</dt><span class="fill"></span><dd>0.940</dd></div>
+            <div class="row"><dt>mAP@50-95</dt><span class="fill"></span><dd>0.847</dd></div>
+            <div class="row"><dt>Compute</dt><span class="fill"></span><dd>Pi 5 + Hailo-8</dd></div>
+          </dl>
+        </div>
+        <div class="spec reveal">
+          <h3>Match</h3>
+          <dl>
+            <div class="row"><dt>Duration</dt><span class="fill"></span><dd>3 min</dd></div>
+            <div class="row"><dt>Autonomous</dt><span class="fill"></span><dd>first 45 s</dd></div>
+            <div class="row"><dt>Own flag</dt><span class="fill"></span><dd>+1</dd></div>
+            <div class="row"><dt>Stolen flag</dt><span class="fill"></span><dd>+3</dd></div>
+            <div class="row"><dt>Knocked over</dt><span class="fill"></span><dd>−2</dd></div>
+          </dl>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Build</h2>
+        <span class="ref">Photos &amp; video</span>
+      </div>
+      <div class="media-grid clip-grid">
+        <figure class="clip reveal">
+    <video src="../assets/video/robonexus-unity.mp4" poster="../assets/video/robonexus-unity-poster.jpg"
+           width="540" height="960" muted loop playsinline preload="none"
+           aria-label="The Unity editor with the competition flag assets loaded, generating labelled training images." style="background-color:#524e53"></video>
+    <figcaption>Generating the training set: 5,001 labelled renders, because no footage of the venue exists.</figcaption>
+  </figure>
+        <figure class="clip reveal">
+    <video src="../assets/video/robonexus-sim.mp4" poster="../assets/video/robonexus-sim-poster.jpg"
+           width="540" height="960" muted loop playsinline preload="none"
+           aria-label="The robot simulation running, with coordinate frames and a planned path displayed." style="background-color:#82807f"></video>
+    <figcaption>The simulation the whole robot was developed in.</figcaption>
+  </figure>
+        <figure class="clip reveal">
+    <video src="../assets/video/robonexus-grab.mp4" poster="../assets/video/robonexus-grab-poster.jpg"
+           width="540" height="960" muted loop playsinline preload="none"
+           aria-label="A claw closing on a flag in simulation." style="background-color:#6e716a"></video>
+    <figcaption>It can grab.</figcaption>
+  </figure>
+        <figure class="clip reveal">
+    <video src="../assets/video/robonexus-cnc.mp4" poster="../assets/video/robonexus-cnc-poster.jpg"
+           width="540" height="960" muted loop playsinline preload="none"
+           aria-label="A CNC mill cutting a pocket into an aluminium plate, chips scattered across the surface." style="background-color:#807a6e"></video>
+    <figcaption>Cutting the parts.</figcaption>
+  </figure>
+        <figure class="media reveal " data-scrub>
+    <img src="../assets/img/robot-side.png" width="1800" height="1100" alt="Front elevation render of the ROBONEXUS robot showing the wheel track, drive motors, chain loop and a claw hanging from it."
+         loading="lazy" decoding="async" style="background:#dcded5">
+    <figcaption>Front elevation. The chain loop and one claw hanging from it; the bottom run sits 81 mm above the floor.</figcaption>
+  </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="dim reveal"><span class="dim-value"><a href="autonomous-drone.html">Next — Autonomous drone</a></span></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span><a href="../">Abdullah Al Mulqi</a> — Daejeon, Korea</span>
+    <span class="rev">Drawn to scale. Every dimension on this site is measured.</span>
+  </div>
+</footer>
+
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

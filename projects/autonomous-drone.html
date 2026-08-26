@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autonomous drone &mdash; Abdullah Al Mulqi</title>
+<meta name="description" content="A quadrotor flying a full autonomous mission: read a signboard, let a language model choose the gate, avoid obstacles, identify one storefront from the air and land on it. Unity-trained YOLO, Kalibr calibration, visual odometry with a dedicated depth-camera altitude channel.">
+<link rel="canonical" href="https://almulqi.com/projects/autonomous-drone.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Autonomous drone - riddle to landing">
+<meta property="og:description" content="A language model picks the gate, visual odometry flies it, and a downward depth camera carries the altitude.">
+<meta property="og:image" content="https://almulqi.com/assets/img/drone-hardware-1920.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23eceee6'/><path d='M3 13V3h10' fill='none' stroke='%230e110c' stroke-width='1.6'/><circle cx='11' cy='11' r='2' fill='%237a4b0d'/></svg>">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script>
+/* Add js before first paint so animated content never flashes in and then
+   collapses. The timer is a failsafe: if site.js never runs (blocked, 404,
+   parse error) it strips the class again so the page is readable rather than
+   invisible. */
+(function(d){d.className+=' js';setTimeout(function(){
+  if(d.className.indexOf('js-ready')<0){d.classList.remove('js');}
+},2500);})(document.documentElement);
+</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="progress" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="../">
+      <svg class="axis-mark" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+        <path d="M3 15 V3" stroke="#3f9d4a" stroke-width="1.8"/>
+        <path d="M3 15 H15" stroke="#c0442f" stroke-width="1.8"/>
+        <circle cx="3" cy="15" r="1.8" fill="currentColor"/>
+      </svg>
+      Abdullah Al Mulqi
+    </a>
+    <nav class="site-nav" aria-label="Sections">
+      <a href="../#work" class="nav-keep">Work</a>
+      <a href="../#skills">Skills</a>
+      <a href="../#journey">Journey</a>
+      <a href="../#contact" class="nav-keep">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="case-hero">
+    <div class="wrap">
+      <p class="label lift" style="--delay:80ms"><a href="../#work" style="color:inherit">Work</a> / EE478 / 2026</p>
+      <h1 class="lift" style="--delay:180ms">Autonomous drone</h1>
+      <p class="lede lift" style="--delay:300ms">
+        A quadrotor that flies an entire mission with nobody in the loop: photograph a
+        signboard, hand it to a language model, fly through the gate the answer points to,
+        avoid what is in the way, then pick one storefront out of four from the air and
+        land on it. Everything runs on board.
+      </p>
+
+      <dl class="case-meta lift" style="--delay:420ms">
+        <div><dt>Course</dt><dd>EE478, KAIST</dd></div>
+        <div><dt>Team</dt><dd>Three students, no fixed roles</dd></div>
+        <div><dt>My share</dt><dd>Perception data, calibration, altitude, troubleshooting</dd></div>
+        <div><dt>Autopilot</dt><dd>PX4 + MAVROS</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <figure class="media reveal" data-scrub>
+        <picture>
+          <source type="image/avif" srcset="../assets/img/drone-hardware-480.avif 480w, ../assets/img/drone-hardware-960.avif 960w, ../assets/img/drone-hardware-1920.avif 1920w" sizes="(max-width:1100px) 92vw, 1100px">
+          <source type="image/webp" srcset="../assets/img/drone-hardware-480.webp 480w, ../assets/img/drone-hardware-960.webp 960w, ../assets/img/drone-hardware-1920.webp 1920w" sizes="(max-width:1100px) 92vw, 1100px">
+          <img src="../assets/img/drone-hardware-960.jpg"
+               srcset="../assets/img/drone-hardware-480.jpg 480w, ../assets/img/drone-hardware-960.jpg 960w, ../assets/img/drone-hardware-1920.jpg 1920w"
+               sizes="(max-width:1100px) 92vw, 1100px"
+               width="2160" height="3840"
+               alt="The quadrotor on a trolley: ducted prop guards, an onboard computer and two depth cameras strapped to the frame."
+               loading="lazy" decoding="async" style="object-position:50% 42%">
+        </picture>
+        <figcaption>The airframe. Two depth cameras &mdash; one forward, one down &mdash; and everything it needs to decide for itself bolted to it.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap case-body">
+
+      <div class="prose" data-scrub>
+
+        <h2 class="reveal">The problem</h2>
+        <p>
+          The mission is a chain of decisions, not a route. The drone takes off from a
+          known home position and flies a series of global waypoints. In front of each
+          gate it stops, photographs a signboard, and sends that image to a language
+          model, which answers left or right. That answer decides which waypoint it flies
+          next. After the third gate it moves over four candidate storefronts, looks down,
+          works out which one is the target, and descends onto it.
+        </p>
+        <p>
+          There is no ground station making decisions and no external tracking system
+          telling the aircraft where it is. All of that has to come off two cameras and an
+          autopilot.
+        </p>
+
+        <h2 class="reveal">What I built</h2>
+        <p>
+          The team had no formal roles. My share was the parts everything else stands on:
+          <strong>the training data for the landing detector, the camera calibration, the
+          altitude channel, and a great deal of troubleshooting.</strong>
+        </p>
+        <ul>
+          <li>A <strong>Unity simulation</strong> that generated roughly
+              <strong>10,000 labelled images</strong> of the landing targets, and the
+              training and fine-tuning of the detector on top of it.</li>
+          <li><strong>Kalibr calibration</strong>: the transform matrices from both cameras
+              to <code>base_link</code>, and the time offset between the image stream and
+              the IMU.</li>
+          <li>The <strong>downward-facing depth camera</strong> and the altitude channel
+              built on it.</li>
+          <li>Flashing the flight controller and setting up the radio.</li>
+          <li>The parts that only show themselves in flight &mdash; the lift-off, and the
+              depth camera's vision window as the airframe pitches.</li>
+        </ul>
+
+        <h2 class="reveal">Key technical decisions</h2>
+
+        <p><strong>The training set is synthetic, because collecting it was never going to happen.</strong>
+          A detector that tells four storefronts apart from above needs thousands of
+          labelled examples, and photographing them by hand was not possible in the time
+          available. So I built the scene in Unity and generated the data instead: about
+          <strong>10,000 labelled frames</strong>, each containing anywhere from zero to
+          sixteen boxes, then fine-tuned on roughly <strong>500 real images</strong> so the
+          model met real motion blur and sensor noise before the day.
+        </p>
+        <p>
+          Domain randomisation is what makes synthetic data generalise &mdash; randomising
+          background, texture, scale, placement and lighting so the network learns the
+          shape rather than the scene. The lighting half of it refused to work until I
+          moved the Unity project onto the
+          <strong>High-Definition Render Pipeline</strong>, which is what finally made
+          light behave realistically enough to be worth randomising.
+        </p>
+
+        <div class="figure-note reveal-x">
+          The detector runs through <b>TensorRT</b> on board. Once the target box is
+          identified the controller holds X and Y rigidly and descends slowly.
+        </div>
+
+        <p><strong>The drone kept seeing the floor as a wall.</strong>
+          Flying forward means pitching forward, and a forward-pitched depth camera looks
+          partly at the ground ahead of it. The obstacle mapper had no way to tell that
+          from a real obstacle, so the local occupancy grid filled up with floor and the
+          planner refused to go anywhere. The fix was to stop trusting the whole frame:
+          the camera's usable <em>vision window</em> is narrowed dynamically from the
+          drone's own IMU pitch, so only the part of the view that can legitimately hold
+          an obstacle is ever mapped.
+        </p>
+
+        <p><strong>Altitude gets a sensor of its own.</strong>
+          Height inferred from a forward camera, or from the geometry of small markers, is
+          the weakest axis in the whole stack. So the downward depth camera does nothing
+          but measure ground-relative range, fused in as a dedicated Z channel while the
+          visual odometry carries X and Y.
+        </p>
+        <p>
+          It has a floor: the sensor cannot measure closer than about
+          <strong>30&nbsp;cm</strong>. Below that the estimator falls back to the visual
+          odometry's own Z and rides through, so crossing the threshold does not put a step
+          in the height estimate &mdash; and a step there goes straight into the controller.
+        </p>
+
+        <p><strong>Odometry took four attempts.</strong>
+          RGB-D SLAM fused with the IMU drifted badly in Z. A tracking camera with built-in
+          odometry looked better until small jitters turned into large position spikes.
+          RGB-D with the depth-camera Z still drifted. What finally held was
+          <strong>semi-direct visual odometry</strong>, measured at roughly
+          <strong>0.3&nbsp;m of drift across the whole arena</strong> on a hand-recorded
+          run. There was no way to rank those four from a desk. Each one had to be flown.
+        </p>
+
+        <h2 class="reveal">What it taught me</h2>
+        <p>
+          The most valuable work I did here was not code. It was sitting down with about
+          <strong>forty flight logs from a single day</strong>, lining them up
+          chronologically, and working out what had actually gone wrong &mdash; because the
+          obvious answer was wrong.
+        </p>
+        <p>
+          Everything we suspected turned out to be healthy. Feature tracking held steady at
+          <strong>260&ndash;330 matches per frame</strong> from early afternoon into the
+          evening, so it was not a camera, a lighting or a texture problem. Measured height
+          to the floor never exceeded about three metres, so the aircraft was where we
+          thought it was.
+        </p>
+        <p>
+          The failure was in the estimator. From a point in the evening onward the
+          autopilot's filter began dropping into its
+          <strong>constant-position fallback</strong> &mdash; the mode it enters when it
+          decides it has no trustworthy horizontal reference, stops integrating motion and
+          assumes the vehicle is holding still. Once there it dead-reckons on the IMU and
+          drifts without bound. The logs show the estimate wandering
+          <strong>tens of metres inside a room twelve metres across</strong>, while the
+          measured height stayed under three.
+        </p>
+
+        <div class="figure-note reveal-x">
+          Two faults combined. There was no global anchor to bound the odometry's natural
+          drift. And the vision covariance was being overwritten with a fixed, wildly
+          optimistic <b>0.01 m&sup2;</b> &mdash; a claim of 10&nbsp;cm accuracy. At that
+          covariance the innovation gate rejects any vision update disagreeing with the IMU
+          by more than about half a metre. Early in the day the odometry's own
+          relocalisation steps were around <b>0.45 m</b> and squeaked under the gate. Later
+          they grew past <b>1.1 m</b>, were rejected, and tipped the filter into fallback.
+        </div>
+
+        <p>
+          The part that stuck with me is the red herring. A parameter had been changed
+          shortly before things got worse, and it looked exactly like the culprit. It was
+          not. The fallback was already firing on more than half the flights
+          <em>before</em> the change, and reverting it did nothing &mdash; because a
+          parameter edit does not reset the filter's internal state, and neither does
+          re-arming. Once an estimator has spent flights dead-reckoning, its bias and
+          covariance estimates are corrupt, and that corruption carries from flight to
+          flight. Only a full power cycle clears it.
+        </p>
+        <p>
+          <strong>Being close in time is not the same as being the cause, and the thing you
+          touched last is not automatically the thing that broke.</strong> The controller
+          was doing its job correctly the entire time. It was being handed a broken
+          estimate. I have not trusted a convenient coincidence the same way since.
+        </p>
+
+      </div>
+
+      <aside class="case-aside">
+        <div class="spec reveal">
+          <h3>Mission</h3>
+          <dl>
+            <div class="row"><dt>Gates</dt><span class="fill"></span><dd>3 left/right pairs</dd></div>
+            <div class="row"><dt>Decision</dt><span class="fill"></span><dd>LLM on signboard</dd></div>
+            <div class="row"><dt>Candidates</dt><span class="fill"></span><dd>4 storefronts</dd></div>
+            <div class="row"><dt>Ending</dt><span class="fill"></span><dd>land on target</dd></div>
+          </dl>
+        </div>
+        <div class="spec reveal">
+          <h3>Stack</h3>
+          <dl>
+            <div class="row"><dt>Autopilot</dt><span class="fill"></span><dd>PX4 / MAVROS</dd></div>
+            <div class="row"><dt>Cameras</dt><span class="fill"></span><dd>2 &times; RealSense</dd></div>
+            <div class="row"><dt>Odometry</dt><span class="fill"></span><dd>semi-direct VO</dd></div>
+            <div class="row"><dt>Altitude</dt><span class="fill"></span><dd>downward depth</dd></div>
+            <div class="row"><dt>Fusion</dt><span class="fill"></span><dd>EKF via VisionPose</dd></div>
+            <div class="row"><dt>Global plan</dt><span class="fill"></span><dd>waypoints + FSM</dd></div>
+            <div class="row"><dt>Local plan</dt><span class="fill"></span><dd>A* occupancy grid</dd></div>
+            <div class="row"><dt>Detector</dt><span class="fill"></span><dd>YOLO / TensorRT</dd></div>
+          </dl>
+        </div>
+        <div class="spec reveal">
+          <h3>Detector data</h3>
+          <dl>
+            <div class="row"><dt>Synthetic</dt><span class="fill"></span><dd>~10,000 frames</dd></div>
+            <div class="row"><dt>Boxes / frame</dt><span class="fill"></span><dd>0&ndash;16</dd></div>
+            <div class="row"><dt>Real fine-tune</dt><span class="fill"></span><dd>~500 images</dd></div>
+            <div class="row"><dt>Renderer</dt><span class="fill"></span><dd>Unity HDRP</dd></div>
+            <div class="row"><dt>Calibration</dt><span class="fill"></span><dd>Kalibr</dd></div>
+          </dl>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>The run</h2>
+        <span class="ref">Flying the course</span>
+      </div>
+      <figure class="clip reveal">
+        <video src="../assets/video/drone-course.mp4" poster="../assets/video/drone-course-poster.jpg"
+               width="1600" height="900" muted loop playsinline preload="none"
+               aria-label="The drone flying the mission course indoors: past traffic cones, through a truss gate marked with AprilTags, towards a row of mock storefronts."
+               style="background-color:#7a7672"></video>
+        <figcaption>Cones to avoid, a tagged gate to choose, and four storefronts to tell apart.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="dim reveal"><span class="dim-value"><a href="racing-car.html">Next &mdash; Self-driving racing car</a></span></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span><a href="../">Abdullah Al Mulqi</a> &mdash; Daejeon, Korea</span>
+  </div>
+</footer>
+
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

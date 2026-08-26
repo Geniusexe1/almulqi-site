@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Transition options</title>
+<style>
+  :root { --acc:#dcab5c; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#111310; color:#eef0e8;
+         font:15px/1.55 "Segoe UI",system-ui,sans-serif; }
+  header { padding:1.1rem 1.25rem; border-bottom:1px solid #2b3128; }
+  h1 { margin:0 0 .3rem; font-size:1rem; letter-spacing:.16em; text-transform:uppercase; }
+  header p { margin:0; color:#a8b09e; max-width:70ch; }
+  .grid { display:grid; gap:1.25rem; padding:1.25rem;
+          grid-template-columns:repeat(auto-fit,minmax(430px,1fr)); }
+  .demo { border:1px solid #2b3128; background:#171a15; }
+  .stage { position:relative; aspect-ratio:16/9; overflow:hidden; background:#000; }
+  .stage img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .lbl { position:absolute; left:0; bottom:0; padding:.7rem 1rem;
+         font:700 clamp(1.3rem,4.5vw,2.6rem)/1 ui-monospace,Consolas,monospace;
+         letter-spacing:-.03em; color:#fff; text-shadow:0 2px 18px #000a; }
+  .meta { padding:.75rem 1rem; display:flex; gap:1rem; align-items:center; flex-wrap:wrap; }
+  .meta h2 { margin:0; font-size:.82rem; letter-spacing:.16em; text-transform:uppercase; }
+  .meta span { color:#a8b09e; font-size:.85rem; flex:1 1 16ch; }
+  input[type=range] { width:100%; accent-color:var(--acc); }
+  .bar { height:3px; background:#2b3128; }
+  .bar i { display:block; height:100%; background:var(--acc); transform-origin:left; }
+  footer { padding:1rem 1.25rem; color:#8d9584; border-top:1px solid #2b3128; }
+  kbd { background:#22271f; padding:.1rem .35rem; border-radius:3px; font-size:.85em; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Transition options</h1>
+  <p>Your two hero frames, four ways. Drag each slider to scrub the transition,
+     or press <kbd>space</kbd> to run them all. Tell me which number you want on
+     the hero and which on the journey — they can differ.</p>
+</header>
+
+<div class="grid" id="grid"></div>
+
+<footer>1 is what the hero uses now. 2 is what the journey uses now.</footer>
+
+<script>
+var A = '../assets/img/hero-snow-1920.jpg';
+var B = '../assets/img/hero-talk-1920.jpg';
+
+var OPTS = [
+  { n: '1 — Cross-fade',
+    note: 'Softest. Reads as one long dissolve; the change can slip past you.',
+    apply: function (top, t) { top.style.opacity = t; top.style.clipPath = 'none'; } },
+
+  { n: '2 — Edge wipe',
+    note: 'A hard border sweeps across. Reads as a cut, and the direction can change per city.',
+    apply: function (top, t) {
+      top.style.opacity = 1;
+      top.style.clipPath = 'inset(0 ' + ((1 - t) * 100).toFixed(2) + '% 0 0)';
+    } },
+
+  { n: '3 — Bar wipe',
+    note: 'Six columns sweep in sequence. Busiest of the four, and the most obviously designed.',
+    apply: function (top, t) {
+      top.style.opacity = 1;
+      top.style.clipPath = bars(t, 6);
+    } },
+
+  { n: '4 — Iris',
+    note: 'Opens from a point. Cinematic, but it puts the focus wherever the circle starts.',
+    apply: function (top, t) {
+      top.style.opacity = 1;
+      top.style.clipPath = 'circle(' + (t * 120).toFixed(1) + '% at 62% 46%)';
+    } }
+];
+
+/* Six vertical bars, each starting slightly after the one before it. A single
+   clip-path cannot hold six separate rectangles, so this walks out and back
+   along each bar to trace them as one continuous polygon. */
+function bars(t, n) {
+  var pts = [];
+  for (var i = 0; i < n; i++) {
+    var local = Math.max(0, Math.min(1, t * (n + 3) - i));
+    var x0 = i / n * 100;
+    var x1 = x0 + (100 / n) * local;
+    pts.push(x0.toFixed(2) + '% 0%', x1.toFixed(2) + '% 0%',
+             x1.toFixed(2) + '% 100%', x0.toFixed(2) + '% 100%');
+  }
+  return 'polygon(' + pts.join(',') + ')';
+}
+
+var grid = document.getElementById('grid');
+OPTS.forEach(function (o, idx) {
+  var el = document.createElement('div');
+  el.className = 'demo';
+  el.innerHTML =
+    '<div class="stage">' +
+      '<img src="' + A + '" alt="">' +
+      '<img class="top" src="' + B + '" alt="">' +
+      '<span class="lbl">DAEJEON</span>' +
+    '</div>' +
+    '<div class="bar"><i></i></div>' +
+    '<div class="meta"><h2>' + o.n + '</h2><span>' + o.note + '</span></div>' +
+    '<div style="padding:0 1rem 1rem"><input type="range" min="0" max="1000" value="0"></div>';
+  grid.appendChild(el);
+
+  var top = el.querySelector('.top');
+  var fill = el.querySelector('.bar i');
+  var lbl = el.querySelector('.lbl');
+  var range = el.querySelector('input');
+
+  function set(t) {
+    o.apply(top, t);
+    fill.style.transform = 'scaleX(' + t + ')';
+    lbl.style.transform = 'translateY(' + ((1 - t) * 110).toFixed(1) + '%)';
+    lbl.style.opacity = t < .04 ? 0 : 1;
+  }
+  range.addEventListener('input', function () { set(range.value / 1000); });
+  el._set = set; el._range = range;
+  set(0);
+});
+
+document.addEventListener('keydown', function (e) {
+  if (e.code !== 'Space') return;
+  e.preventDefault();
+  var t0 = performance.now();
+  (function step(now) {
+    var t = Math.min(1, (now - t0) / 1400);
+    [].forEach.call(grid.children, function (el) {
+      el._set(t); el._range.value = t * 1000;
+    });
+    if (t < 1) requestAnimationFrame(step);
+  })(t0);
+});
+</script>
+</body>
+</html>

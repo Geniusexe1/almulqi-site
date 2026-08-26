@@ -1,0 +1,9 @@
+# working files, not the site
+tools/__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+
+# picker thumbnails are regenerable: python3 tools/gen_picker.py
+tools/picker/thumbs/
+tools/traced/*.png

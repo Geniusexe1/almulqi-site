@@ -1,0 +1,928 @@
+{
+ "hero-snow": {
+  "kind": "image",
+  "w": 3024,
+  "h": 4032,
+  "widths": [
+   480,
+   960,
+   1920,
+   2560
+  ],
+  "avg": "#828076",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "Abdullah alone on a floodlit sports field in heavy snow at night, arms spread wide, his footprints leading back across the pitch.",
+  "caption": null,
+  "use": "hero"
+ },
+ "hero-talk": {
+  "kind": "image",
+  "w": 6000,
+  "h": 4000,
+  "widths": [
+   480,
+   960,
+   1920,
+   2560
+  ],
+  "avg": "#8d7d6d",
+  "pos": [
+   52,
+   35
+  ],
+  "alt": "Abdullah mid-sentence with a microphone at an exhibition booth, hands moving as he explains something.",
+  "caption": null,
+  "use": "hero"
+ },
+ "saudi-graduation": {
+  "kind": "image",
+  "w": 960,
+  "h": 1280,
+  "widths": [
+   480,
+   960
+  ],
+  "avg": "#98808e",
+  "pos": [
+   50,
+   37
+  ],
+  "alt": "Abdullah in cap and gown with a 2024 sash and a headset microphone, hosting his own graduation ceremony.",
+  "caption": "Hosting the 2024 graduation. Al-Rowad International Schools, Riyadh.",
+  "use": "journey:saudi"
+ },
+ "saudi-podium": {
+  "kind": "image",
+  "w": 1280,
+  "h": 720,
+  "widths": [
+   480,
+   960,
+   1280
+  ],
+  "avg": "#464b89",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "Abdullah at a lectern on a blue-lit stage in front of a large 2024 backdrop, addressing the graduation audience.",
+  "caption": "An audience of over a thousand.",
+  "use": "journey:saudi"
+ },
+ "saudi-stage": {
+  "kind": "image",
+  "w": 1280,
+  "h": 960,
+  "widths": [
+   480,
+   960,
+   1280
+  ],
+  "avg": "#5a4b78",
+  "pos": [
+   51,
+   39
+  ],
+  "alt": "Abdullah and a classmate on stage in graduation robes, both wearing 2024 sashes.",
+  "caption": "Valedictorian, ranked first in the graduating class.",
+  "use": "journey:saudi"
+ },
+ "saudi-pcbuild-1": {
+  "kind": "image",
+  "w": 3024,
+  "h": 4032,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#726455",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "Hands reaching across a table covered in motherboards, CPU coolers and screwdrivers during a PC-building workshop.",
+  "caption": "The Computer Club: the first club at the school, and its PC-building workshops.",
+  "use": "journey:saudi"
+ },
+ "saudi-pcbuild-2": {
+  "kind": "image",
+  "w": 3024,
+  "h": 4032,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#6e6152",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "Students working on an open desktop computer case and a bare motherboard at a workshop table.",
+  "caption": null,
+  "use": "journey:saudi"
+ },
+ "saudi-street": {
+  "kind": "image",
+  "w": 3048,
+  "h": 4064,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#81858d",
+  "pos": [
+   48,
+   14
+  ],
+  "alt": "Abdullah sitting on a blue motorbike in a sunlit street with friends standing around.",
+  "caption": null,
+  "use": "journey:saudi"
+ },
+ "korea-summit": {
+  "kind": "image",
+  "w": 4284,
+  "h": 5712,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#747e8d",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "Abdullah sitting on a rock at a mountain summit beside a stone marker, deep blue sky behind him.",
+  "caption": "Daejeon. KAIST, since February 2025.",
+  "use": "journey:korea"
+ },
+ "car-bench": {
+  "kind": "image",
+  "w": 5712,
+  "h": 4284,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#807a71",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "The self-driving car on a bench: a Raspberry Pi, motor drivers and ultrasonic sensors wired onto a flat chassis, pliers beside it.",
+  "caption": "Raspberry Pi, motor drivers, ultrasonic range finders.",
+  "use": "project:racing-car"
+ },
+ "car-floor": {
+  "kind": "image",
+  "w": 4284,
+  "h": 5712,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#94918c",
+  "pos": [
+   53,
+   43
+  ],
+  "alt": "The self-driving car standing on a tiled floor, its wiring loom and sensor mast clearly visible.",
+  "caption": null,
+  "use": "project:racing-car"
+ },
+ "caricature-machine": {
+  "kind": "image",
+  "w": 3024,
+  "h": 4032,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#7e7570",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "The drawing machine on a table with a finished line-drawn portrait beside it, and a hand giving a thumbs up.",
+  "caption": "The plotter, and something it drew.",
+  "use": "project:caricature-robot"
+ },
+ "caricature-portrait": {
+  "kind": "image",
+  "w": 3024,
+  "h": 4032,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#736c67",
+  "pos": [
+   33,
+   38
+  ],
+  "alt": "A student smiling and holding up a line-drawn caricature of his own face, drawn by the machine.",
+  "caption": "Faces come out the other end.",
+  "use": "project:caricature-robot"
+ },
+ "life-flatbread": {
+  "kind": "image",
+  "w": 2160,
+  "h": 3840,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#766e63",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "A flatbread baked at home, blistered and cheese-topped, fresh out of the pan.",
+  "caption": null,
+  "use": "personal"
+ },
+ "life-cinnamon": {
+  "kind": "image",
+  "w": 2160,
+  "h": 3840,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#867c6d",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "A tray of homemade cinnamon rolls under caramel sauce, one already lifted out.",
+  "caption": null,
+  "use": "personal"
+ },
+ "life-friends-meal": {
+  "kind": "image",
+  "w": 1600,
+  "h": 1200,
+  "widths": [
+   480,
+   960,
+   1600
+  ],
+  "avg": "#85766d",
+  "pos": [
+   78,
+   34
+  ],
+  "alt": "Abdullah and six friends crowded around a table of food, all pulling faces at the camera.",
+  "caption": null,
+  "use": "personal"
+ },
+ "life-dinner": {
+  "kind": "image",
+  "w": 1400,
+  "h": 1050,
+  "widths": [
+   480,
+   960,
+   1400
+  ],
+  "avg": "#7e7771",
+  "pos": [
+   51,
+   47
+  ],
+  "alt": "A long table of shared dishes with a dozen friends around it.",
+  "caption": null,
+  "use": "personal"
+ },
+ "life-kitchen": {
+  "kind": "image",
+  "w": 720,
+  "h": 1280,
+  "widths": [
+   480,
+   720
+  ],
+  "avg": "#817d77",
+  "pos": [
+   51,
+   48
+  ],
+  "alt": "Abdullah in a commercial kitchen with two colleagues, trays of prepped food in front of them.",
+  "caption": null,
+  "use": "personal"
+ },
+ "life-bike": {
+  "kind": "image",
+  "w": 4284,
+  "h": 5712,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#8e8e89",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "Abdullah standing with his fat-tyre e-bike on a campus path in winter.",
+  "caption": null,
+  "use": "personal"
+ },
+ "life-beach": {
+  "kind": "image",
+  "w": 3024,
+  "h": 4032,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#7b654a",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "A beach at sunset with the tide running out, low sun across the water.",
+  "caption": null,
+  "use": "personal"
+ },
+ "ankara-lecture": {
+  "kind": "image",
+  "w": 1600,
+  "h": 1200,
+  "widths": [
+   480,
+   960,
+   1600
+  ],
+  "avg": "#6f766c",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "A lecture theatre at ODTU with three blackboards covered in handwritten analysis proofs, the lecturer at the podium.",
+  "caption": "Real analysis, in a language and a city I did not know.",
+  "use": "journey:turkiye"
+ },
+ "ankara-snow": {
+  "kind": "image",
+  "w": 2048,
+  "h": 1152,
+  "widths": [
+   480,
+   960,
+   1920,
+   2048
+  ],
+  "avg": "#5e5d5f",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "Heavy snow falling across a floodlit sports field at night, students scattered across it.",
+  "caption": null,
+  "use": "journey:turkiye"
+ },
+ "ankara-f1": {
+  "kind": "image",
+  "w": 2268,
+  "h": 4032,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#776767",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "A Formula 1 car on a red display ramp under a marquee on the ODTU campus.",
+  "caption": "An F1 car parked on campus, as you do.",
+  "use": "journey:turkiye"
+ },
+ "kaist-ambassador": {
+  "kind": "image",
+  "w": 3520,
+  "h": 1980,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#707e83",
+  "pos": [
+   21,
+   27
+  ],
+  "alt": "Abdullah presenting a slide titled International Community at KAIST to a seated audience.",
+  "caption": "KAIST Ambassador, presenting KAIST back home in Saudi Arabia.",
+  "use": "journey:korea"
+ },
+ "drone-reprojection": {
+  "kind": "image",
+  "w": 4284,
+  "h": 5712,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#7c7670",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "A laptop showing camera calibration reprojection-error plots, a dense red cluster beside a coloured scatter.",
+  "caption": "Reprojection error. If this is wrong, every bearing downstream is wrong.",
+  "use": "project:autonomous-drone"
+ },
+ "caricature-output": {
+  "kind": "image",
+  "w": 1600,
+  "h": 901,
+  "widths": [
+   480,
+   960,
+   1600
+  ],
+  "avg": "#757171",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "The pen plotter on a workbench with two finished line portraits standing up behind it.",
+  "caption": "Two faces, straight off the machine.",
+  "use": "project:caricature-robot"
+ },
+ "life-dsc-0617": {
+  "kind": "image",
+  "w": 6000,
+  "h": 4000,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#747470",
+  "pos": [
+   53,
+   45
+  ],
+  "alt": "Abdullah and two friends in hairnets and gloves behind a food stall under a marquee.",
+  "caption": null,
+  "use": "personal"
+ },
+ "shot-img-0094": {
+  "kind": "image",
+  "w": 4284,
+  "h": 5712,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#6b645c",
+  "pos": [
+   49,
+   20
+  ],
+  "alt": "Abdullah standing in an empty lecture hall in sunglasses and a black jacket.",
+  "caption": null,
+  "use": "montage"
+ },
+ "shot-img-0188": {
+  "kind": "image",
+  "w": 4032,
+  "h": 3024,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#847763",
+  "pos": [
+   34,
+   49
+  ],
+  "alt": "Abdullah and four friends in a lecture hall, thumbs up and peace signs at the camera.",
+  "caption": null,
+  "use": "montage"
+ },
+ "life-img-0910": {
+  "kind": "image",
+  "w": 2316,
+  "h": 3088,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#6f685c",
+  "pos": [
+   71,
+   57
+  ],
+  "alt": "Abdullah in front of a waterfall on a rocky hillside.",
+  "caption": null,
+  "use": "personal"
+ },
+ "saudi-img-0947": {
+  "kind": "image",
+  "w": 2316,
+  "h": 3088,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#867b73",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "Abdullah and a friend in suits, taking a selfie on a sunlit street.",
+  "caption": null,
+  "use": "journey:saudi"
+ },
+ "shot-img-1245": {
+  "kind": "image",
+  "w": 3024,
+  "h": 4032,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#875c61",
+  "pos": [
+   47,
+   27
+  ],
+  "alt": "Abdullah sitting cross-legged on a Korean throne in front of a red and gold backdrop.",
+  "caption": null,
+  "use": "montage"
+ },
+ "shot-img-1493": {
+  "kind": "image",
+  "w": 3024,
+  "h": 4032,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#555050",
+  "pos": [
+   75,
+   50
+  ],
+  "alt": "Abdullah leaning back against a railing at night with a lit city behind him.",
+  "caption": null,
+  "use": "montage"
+ },
+ "ankara": {
+  "kind": "image",
+  "w": 1200,
+  "h": 1600,
+  "widths": [
+   480,
+   960,
+   1200
+  ],
+  "avg": "#55463f",
+  "pos": [
+   42,
+   57
+  ],
+  "alt": "Abdullah and three friends crowded into a selfie in an Ankara metro station.",
+  "caption": null,
+  "use": "journey:turkiye"
+ },
+ "ankara-img-5856": {
+  "kind": "image",
+  "w": 3024,
+  "h": 4032,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#716355",
+  "pos": [
+   50,
+   59
+  ],
+  "alt": "Abdullah and six friends around a restaurant table in Ankara, a large mural behind them.",
+  "caption": "Ankara, most evenings.",
+  "use": "journey:turkiye"
+ },
+ "ankara-img-6678": {
+  "kind": "image",
+  "w": 3088,
+  "h": 2316,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#4d4742",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "A blurred, laughing selfie on a stairwell mid-motion.",
+  "caption": null,
+  "use": "journey:turkiye"
+ },
+ "drone-hardware": {
+  "kind": "image",
+  "w": 2160,
+  "h": 3840,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#8f8c8a",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "The quadrotor on a trolley: ducted prop guards, an onboard computer and two depth cameras strapped to the frame.",
+  "caption": "The airframe. Everything it needs to decide for itself is bolted to it.",
+  "use": "project:autonomous-drone"
+ },
+ "mr-banner": {
+  "kind": "image",
+  "w": 8064,
+  "h": 4536,
+  "widths": [
+   480,
+   960,
+   1920,
+   2560
+  ],
+  "avg": "#716e69",
+  "pos": [
+   72,
+   75
+  ],
+  "alt": "A large crowd of students sitting out on the KAIST campus lawn on a bright day.",
+  "caption": null,
+  "use": "strand"
+ },
+ "korea-blossom": {
+  "kind": "image",
+  "w": 5712,
+  "h": 4284,
+  "widths": [
+   480,
+   960,
+   1920,
+   2560
+  ],
+  "avg": "#858483",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "A cherry-blossom avenue on the KAIST campus, petals over a quiet road lined with parked bicycles.",
+  "caption": null,
+  "use": "journey:korea"
+ },
+ "life-table": {
+  "kind": "image",
+  "w": 2160,
+  "h": 3840,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#9f9986",
+  "pos": [
+   72,
+   46
+  ],
+  "alt": "A table laid with rice, stew and side dishes on patterned plates, cooked at home.",
+  "caption": null,
+  "use": "personal"
+ },
+ "life-buns": {
+  "kind": "image",
+  "w": 2160,
+  "h": 3840,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#9a8579",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "A glass dish of cinnamon rolls in caramel sauce, straight out of the oven.",
+  "caption": null,
+  "use": "personal"
+ },
+ "life-statue": {
+  "kind": "image",
+  "w": 4284,
+  "h": 5712,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#9f8978",
+  "pos": [
+   76,
+   35
+  ],
+  "alt": "Abdullah copying the pose of a painted warrior statue at the gate of a Korean palace.",
+  "caption": null,
+  "use": "personal"
+ },
+ "car-racing": {
+  "kind": "video",
+  "w": 540,
+  "h": 960,
+  "avg": "#a39993",
+  "pos": [
+   50,
+   42
+  ],
+  "bytes": 2224652,
+  "alt": "The self-driving car racing around a walled circuit, taking the corners without touching the barriers.",
+  "caption": "The race phase: PID on ultrasonic range, holding the middle of the corridor.",
+  "use": "project:racing-car"
+ },
+ "car-line": {
+  "kind": "video",
+  "w": 540,
+  "h": 960,
+  "avg": "#9e9b94",
+  "pos": [
+   50,
+   42
+  ],
+  "bytes": 907335,
+  "alt": "The car following a white line across a floor towards the starting grid.",
+  "caption": "The approach phase: a convolutional network steering from the camera alone.",
+  "use": "project:racing-car"
+ },
+ "caricature-drawing": {
+  "kind": "video",
+  "w": 540,
+  "h": 960,
+  "avg": "#666561",
+  "pos": [
+   50,
+   42
+  ],
+  "bytes": 1442108,
+  "alt": "The pen plotter drawing a portrait, its gantry moving across the paper.",
+  "caption": "A dead 3D printer, drawing.",
+  "use": "project:caricature-robot"
+ },
+ "drone-flight": {
+  "kind": "video",
+  "w": 540,
+  "h": 960,
+  "avg": "#b2b774",
+  "pos": [
+   50,
+   42
+  ],
+  "bytes": 2703482,
+  "alt": "The quadrotor hovering low over a lawn on the KAIST campus.",
+  "caption": "Hovering under its own state estimate.",
+  "use": "project:autonomous-drone"
+ },
+ "robonexus-unity": {
+  "kind": "video",
+  "w": 540,
+  "h": 960,
+  "avg": "#524e53",
+  "pos": [
+   50,
+   42
+  ],
+  "bytes": 898620,
+  "alt": "The Unity editor with the competition flag assets loaded, generating labelled training images.",
+  "caption": "Generating the training set: 5,001 labelled renders, because no footage of the venue exists.",
+  "use": "project:robonexus"
+ },
+ "robonexus-sim": {
+  "kind": "video",
+  "w": 1284,
+  "h": 960,
+  "avg": "#87858a",
+  "pos": [
+   50,
+   42
+  ],
+  "bytes": 614804,
+  "alt": "The robot simulation running, with coordinate frames and a planned path displayed.",
+  "caption": "The simulation the whole robot was developed in.",
+  "use": "project:robonexus"
+ },
+ "robonexus-cnc": {
+  "kind": "video",
+  "w": 540,
+  "h": 960,
+  "avg": "#807a6e",
+  "pos": [
+   50,
+   42
+  ],
+  "bytes": 676225,
+  "alt": "A CNC mill cutting a pocket into an aluminium plate, chips scattered across the surface.",
+  "caption": "Cutting the parts.",
+  "use": "project:robonexus"
+ },
+ "saudi-pcbuild-clip": {
+  "kind": "video",
+  "w": 540,
+  "h": 960,
+  "avg": "#6d584a",
+  "pos": [
+   50,
+   42
+  ],
+  "bytes": 1490019,
+  "alt": "Hands fitting a CPU cooler onto a motherboard during the school PC-building workshop.",
+  "caption": "Workshops for a few hundred students.",
+  "use": "journey:saudi"
+ },
+ "drone-img-1577": {
+  "kind": "video",
+  "w": 1706,
+  "h": 960,
+  "avg": "#87796a",
+  "pos": [
+   50,
+   42
+  ],
+  "bytes": 1159882,
+  "alt": "The quadrotor on the floor of a lecture hall with Abdullah standing over it, mid-test.",
+  "caption": "Indoor testing, before it ever flew the course.",
+  "use": "project:autonomous-drone"
+ },
+ "drone-course": {
+  "kind": "video",
+  "w": 1600,
+  "h": 900,
+  "avg": "#7a7672",
+  "pos": [
+   50,
+   42
+  ],
+  "bytes": 10738849,
+  "alt": "The drone flying the mission course indoors: past traffic cones, through a truss gate marked with AprilTags, towards a row of mock storefronts.",
+  "caption": "The course: cones to avoid, a tagged gate to pick, and four storefronts to tell apart.",
+  "use": "project:autonomous-drone"
+ },
+ "robot-iso": {
+  "kind": "render",
+  "w": 1700,
+  "h": 1300,
+  "avg": "#8e948a",
+  "caption": null,
+  "alt": "Three-quarter orthographic render of the ROBONEXUS robot: mecanum wheels, side panels, chain sprockets and the stereo camera, generated from its own URDF and CAD meshes.",
+  "use": "project:robonexus"
+ },
+ "robot-side": {
+  "kind": "render",
+  "w": 1800,
+  "h": 1100,
+  "avg": "#8e948a",
+  "caption": null,
+  "alt": "Front elevation render of the ROBONEXUS robot showing the wheel track, drive motors, chain loop and a claw hanging from it.",
+  "use": "project:robonexus"
+ },
+ "robot-top": {
+  "kind": "render",
+  "w": 1500,
+  "h": 1500,
+  "avg": "#8e948a",
+  "caption": null,
+  "alt": "Plan view render of the ROBONEXUS robot.",
+  "use": "project:robonexus"
+ }
+}

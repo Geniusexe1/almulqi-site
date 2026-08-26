@@ -1,0 +1,456 @@
+/* ==========================================================================
+   ACTS — the five-part scroll narrative on the landing page
+   ==========================================================================
+   Loaded after site.css, which owns the tokens, type and the motion contract.
+   Nothing here introduces a second animation system: every moving thing reads
+   numbers site.js writes.
+
+     --e         entry progress, 0 → 1
+     --p         travel progress, 0 → 1
+     --k         progress within the current journey stage, 0 → 1
+     data-stage  which journey stage is on screen
+
+   Two acts pin themselves with position: sticky rather than by hijacking the
+   scroll, so a failed script or a reduced-motion preference degrades to an
+   ordinary vertical page instead of a broken one.
+   ========================================================================== */
+
+/* ==========================================================================
+   ACT 1 — HERO
+   ========================================================================== */
+
+.act-hero { position: relative; }
+.hero-pin  { position: relative; height: 100svh; overflow: hidden; background: #0d0f0d; }
+
+.js .act-hero { height: 230vh; }
+.js .hero-pin { position: sticky; top: 0; }
+
+.hero-shot { position: absolute; inset: 0; }
+.hero-shot img { width: 100%; height: 100%; object-fit: cover; }
+
+.js .hero-shot--a { opacity: clamp(0, calc(1.55 - var(--p, 0) * 2.6), 1); }
+.hero-shot--b { opacity: 0; }
+.js .hero-shot--b { opacity: clamp(0, calc(var(--p, 0) * 2.6 - 0.75), 1); }
+
+.hero-scrim {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(10,13,10,.38) 0%, rgba(10,13,10,.04) 34%,
+                    rgba(10,13,10,.18) 62%, rgba(10,13,10,.74) 100%);
+}
+
+/* the inner span cancels the trailing letter-space so the string optically
+   centres instead of sitting one tracking unit to the left */
+.hero-name > span { display: inline-block; margin-right: -.06em; }
+
+.hero-name {
+  position: absolute; left: 0; right: 0;
+  top: 50%;
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 16.5vw, 17rem);
+  line-height: .9;
+  letter-spacing: .06em;
+  color: #eceee4;
+  white-space: nowrap;
+  transform: translate3d(0, -50%, 0);
+}
+.js .hero-name {
+  transform: translate3d(0, calc(-50% + (var(--p, 0) * -70px)), 0)
+             scale(calc(1 + var(--p, 0) * 0.045));
+}
+
+.hero-foot {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: var(--gutter);
+  display: flex; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap;
+  color: #eceee4;
+}
+.hero-foot h2 {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(1.1rem, 3.4vw, 2rem); letter-spacing: .12em;
+  margin: 0 0 .3rem;
+}
+.hero-foot p {
+  margin: 0; max-width: 46ch; color: #e6e9df;
+  font-size: clamp(.95rem, 1.6vw, 1.08rem);
+}
+.hero-foot .right { margin-left: auto; text-align: right; }
+
+.scroll-cue {
+  font-family: var(--font-display); font-size: .66rem;
+  letter-spacing: .2em; text-transform: uppercase; color: #d2d7c9;
+  display: inline-flex; align-items: center; gap: .6rem;
+}
+.scroll-cue::after {
+  content: ""; width: 1px; height: 2.2rem;
+  background: linear-gradient(to bottom, #d2d7c9, transparent);
+}
+.js .scroll-cue { opacity: clamp(0, calc(1 - var(--p, 0) * 4), 1); }
+
+@media (max-width: 640px) {
+  .hero-foot { flex-direction: column; align-items: flex-start; }
+  .hero-foot .right { margin-left: 0; text-align: left; }
+}
+
+/* ==========================================================================
+   ACT 2 — MONTAGE
+   ========================================================================== */
+
+.act-montage { padding-block: clamp(3rem, 8vw, 6rem); overflow: hidden; }
+
+.montage-row { display: flex; gap: 1rem; width: max-content; margin-bottom: 1rem; }
+.montage-row .shot {
+  flex: none; width: clamp(150px, 22vw, 280px); aspect-ratio: 3 / 4;
+  border: 1px solid var(--rule-soft);
+}
+.montage-row .shot.wide { width: clamp(220px, 32vw, 420px); aspect-ratio: 4 / 3; }
+
+.js .montage-row--a { transform: translate3d(calc(-14% + var(--p, 0) * -16%), 0, 0); }
+.js .montage-row--b { transform: translate3d(calc(-42% + var(--p, 0) * 20%), 0, 0); }
+.js .montage-row .shot { transform: scale(calc(0.94 + var(--p, 0) * 0.06)); }
+
+/* ==========================================================================
+   ACT 3 — THE JOURNEY
+   ==========================================================================
+   A pinned three-stage sequence. Each stage owns a full-bleed photograph, a
+   very large city name, and a panel of detail; consecutive stages enter from
+   different sides so the change reads as a cut rather than a dissolve.
+   ========================================================================== */
+
+.act-journey { position: relative; background: #20241d; color: #f6f8ef; }
+.journey-pin { position: relative; }
+
+.js .act-journey { height: 400vh; }
+.js .journey-pin { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+
+/* --- the photograph behind each stage ----------------------------------- */
+
+/* Each frame keeps ONE side bright and clear and darkens toward the opposite
+   side, and the text sits on the dark side. The wipe that brings the frame in
+   travels the same way the brightness falls off, so the reveal and the shading
+   read as one movement rather than two effects. */
+.j-bg { position: absolute; inset: 0; }
+.j-bg .shot { position: absolute; inset: 0; clip-path: inset(0 0 0 100%); }
+.js .j-bg .shot { transition: clip-path 1000ms cubic-bezier(.66, 0, .2, 1); }
+
+/* the edge the reveal starts from */
+.j-bg .shot[data-wipe="right"] { clip-path: inset(0 0 0 100%); }
+.j-bg .shot[data-wipe="left"]  { clip-path: inset(0 100% 0 0); }
+.j-bg .shot[data-wipe="top"]   { clip-path: inset(0 0 100% 0); }
+
+.js .act-journey[data-stage="0"] .j-bg .shot[data-i="0"],
+.js .act-journey[data-stage="1"] .j-bg .shot[data-i="1"],
+.js .act-journey[data-stage="2"] .j-bg .shot[data-i="2"] { clip-path: inset(0 0 0 0); }
+
+/* a slow push in across each stage, so the frame is never quite still */
+.js .j-bg .shot img { transform: scale(calc(1.04 + var(--k, 0) * 0.08)); }
+
+/* One scrim per stage, shading only the side the text lands on. Far lighter
+   than a full-frame wash: the photograph stays a photograph. */
+.j-shade { position: absolute; inset: 0; opacity: 0; }
+.js .j-shade { transition: opacity 700ms var(--ease); }
+.js .act-journey[data-stage="0"] .j-shade[data-i="0"],
+.js .act-journey[data-stage="1"] .j-shade[data-i="1"],
+.js .act-journey[data-stage="2"] .j-shade[data-i="2"] { opacity: 1; }
+
+.j-shade[data-dark="left"] {
+  background: linear-gradient(to right,
+    rgba(12,15,11,.90) 0%, rgba(12,15,11,.66) 26%,
+    rgba(12,15,11,.22) 54%, rgba(12,15,11,0) 78%);
+}
+.j-shade[data-dark="right"] {
+  background: linear-gradient(to left,
+    rgba(12,15,11,.90) 0%, rgba(12,15,11,.66) 26%,
+    rgba(12,15,11,.22) 54%, rgba(12,15,11,0) 78%);
+}
+.j-shade[data-dark="bottom"] {
+  background: linear-gradient(to top,
+    rgba(12,15,11,.92) 0%, rgba(12,15,11,.62) 30%,
+    rgba(12,15,11,.16) 60%, rgba(12,15,11,0) 82%);
+}
+
+/* --- the stages --------------------------------------------------------- */
+
+.j-stages { position: relative; height: 100%; }
+.j-stage {
+  position: absolute; inset: 0;
+  display: grid;
+  /* `safe center` centres while refusing to push content off the top edge.
+     Riyadh and Daejeon carry five facts each and were overflowing upward. */
+  align-content: safe center;
+  padding: 7vh var(--gutter) 19vh;
+  max-width: 1180px; margin-inline: auto;
+  overflow: hidden;
+}
+/* the text sits on the side the wipe came from */
+.j-stage[data-side="left"]  { justify-items: start; text-align: left; }
+.j-stage[data-side="right"] { justify-items: end;   text-align: right; }
+.j-stage[data-side="right"] .j-facts li { padding-left: 0; padding-right: 1.1rem; }
+.j-stage[data-side="right"] .j-facts li::before { left: auto; right: 0; }
+.j-stage[data-side="right"] .j-shots { justify-content: flex-end; }
+.j-stage[data-side="bottom"] { justify-items: start; align-content: safe end; }
+.js .j-stage { opacity: 0; pointer-events: none; transition: opacity 520ms var(--ease); }
+.js .act-journey[data-stage="0"] .j-stage[data-i="0"],
+.js .act-journey[data-stage="1"] .j-stage[data-i="1"],
+.js .act-journey[data-stage="2"] .j-stage[data-i="2"] { opacity: 1; pointer-events: auto; }
+
+/* --- the city name: the loud thing in this act -------------------------- */
+
+.j-city {
+  margin: 0 0 .12em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  /* the vh cap is what stops a long name plus five facts from running off the
+     top of a short window */
+  font-size: min(clamp(2.6rem, 12vw, 10rem), 16vh);
+  line-height: .82;
+  letter-spacing: -.05em;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+.j-city span { display: block; overflow: hidden; }
+.j-city b {
+  display: block; font-weight: inherit;
+  transform: translateY(103%);
+  transition: transform 760ms cubic-bezier(.16, .9, .24, 1);
+}
+.js .act-journey[data-stage="0"] .j-stage[data-i="0"] .j-city b,
+.js .act-journey[data-stage="1"] .j-stage[data-i="1"] .j-city b,
+.js .act-journey[data-stage="2"] .j-stage[data-i="2"] .j-city b { transform: none; }
+
+.j-meta {
+  font-family: var(--font-display); font-size: .82rem;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--accent); margin: 0 0 1.2rem;
+}
+
+/* --- the detail panel, entering from a different side each stage --------- */
+
+.j-panel { max-width: 54ch; }
+.js .j-panel {
+  opacity: 0;
+  transition: opacity 640ms var(--ease) 120ms, transform 640ms var(--ease) 120ms;
+}
+.js .j-stage[data-i="0"] .j-panel { transform: translateX(-7%); }
+.js .j-stage[data-i="1"] .j-panel { transform: translateX(7%); }
+.js .j-stage[data-i="2"] .j-panel { transform: translateY(9%); }
+.js .act-journey[data-stage="0"] .j-stage[data-i="0"] .j-panel,
+.js .act-journey[data-stage="1"] .j-stage[data-i="1"] .j-panel,
+.js .act-journey[data-stage="2"] .j-stage[data-i="2"] .j-panel {
+  opacity: 1; transform: none;
+}
+.j-panel p { margin: 0 0 .9rem; font-size: var(--step-1); color: #eaece1; }
+.j-facts { margin: 0; padding: 0; list-style: none; display: grid; gap: .4rem; }
+.j-facts li { position: relative; padding-left: 1.1rem; color: #e2e6d9; }
+.j-facts li::before {
+  content: ""; position: absolute; left: 0; top: .62em;
+  width: .5rem; height: 2px; background: var(--accent);
+}
+
+/* --- the strip of supporting photographs -------------------------------- */
+
+.j-shots { display: flex; gap: .6rem; margin-top: 1.4rem; flex-wrap: wrap; }
+.j-shots .shot {
+  width: clamp(96px, 9.5vw, 124px); aspect-ratio: 3 / 4;
+  border: 1px solid rgba(255,255,255,.3);
+}
+/* On a phone four thumbnails across leaves each of them unreadable, so
+   they become a two-column grid at a size worth looking at. */
+@media (max-width: 700px) {
+  .j-shots { display: grid; grid-template-columns: repeat(2, 1fr);
+             gap: .5rem; max-width: 20rem; }
+  .j-shots .shot { width: auto; }
+  .j-stage[data-side="right"] .j-shots { margin-left: auto; }
+}
+.js .j-shots .shot {
+  opacity: 0; transform: translateY(18px);
+  transition: opacity 520ms var(--ease), transform 520ms var(--ease);
+}
+.js .act-journey[data-stage="0"] .j-stage[data-i="0"] .j-shots .shot,
+.js .act-journey[data-stage="1"] .j-stage[data-i="1"] .j-shots .shot,
+.js .act-journey[data-stage="2"] .j-stage[data-i="2"] .j-shots .shot {
+  opacity: 1; transform: none;
+}
+.j-shots .shot:nth-child(2) { transition-delay: 90ms; }
+.j-shots .shot:nth-child(3) { transition-delay: 180ms; }
+.j-shots .shot:nth-child(4) { transition-delay: 270ms; }
+.j-shots .shot:nth-child(5) { transition-delay: 360ms; }
+.j-shots .shot:hover { transform: translateY(-6px) scale(1.05); z-index: 2; }
+
+/* --- three dots and a blob --------------------------------------------- */
+/* The blob travels between the dots and squeezes as it goes: it stretches
+   along the direction of travel and narrows across it, so volume looks
+   conserved and the move reads as being pushed through rather than sliding.
+   site.js writes --jpos (0-1 down the track) and --jsq (the stretch). */
+
+.j-dots {
+  position: absolute; right: clamp(1rem, 3.2vw, 2.75rem); top: 50%;
+  width: 18px; height: 9rem; margin-top: -4.5rem;
+  pointer-events: none;
+}
+.j-dots .dot {
+  position: absolute; left: 50%;
+  width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.34);
+  transition: background 420ms var(--ease), transform 420ms var(--ease);
+}
+.j-dots .dot:nth-child(1) { top: 0; }
+.j-dots .dot:nth-child(2) { top: 50%; }
+.j-dots .dot:nth-child(3) { top: 100%; }
+.act-journey[data-stage="0"] .j-dots .dot:nth-child(1),
+.act-journey[data-stage="1"] .j-dots .dot:nth-child(2),
+.act-journey[data-stage="2"] .j-dots .dot:nth-child(3) {
+  background: rgba(255,255,255,.8); transform: scale(1.25);
+}
+
+.j-blob {
+  position: absolute; left: 50%; top: 0;
+  width: 16px; height: 16px; margin: -8px 0 0 -8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(220,171,92,.18);
+  transform: translateY(calc(var(--jpos, 0) * 9rem))
+             scaleY(var(--jsq, 1))
+             scaleX(calc(1 / var(--jsq, 1)));
+}
+
+@media (max-width: 640px) {
+  .j-dots { right: .6rem; height: 6.5rem; margin-top: -3.25rem; }
+  .j-blob { transform: translateY(calc(var(--jpos, 0) * 6.5rem))
+                       scaleY(var(--jsq, 1)) scaleX(calc(1 / var(--jsq, 1))); }
+}
+
+/* ==========================================================================
+   ACT 4 — THE WORK
+   Everything that matters is readable without interacting; hover and focus
+   only make the photo cluster open up.
+   ========================================================================== */
+
+.act-work { padding-block: clamp(3.5rem, 8vw, 7rem); }
+.bundles { display: grid; gap: clamp(2rem, 5vw, 3.5rem); }
+
+/* a club or course that the projects underneath belong to */
+.strand { margin-bottom: clamp(2.5rem, 6vw, 4.5rem); }
+.strand-banner {
+  position: relative; overflow: hidden;
+  border: 1px solid var(--rule);
+  min-height: clamp(200px, 28vw, 340px);
+  display: grid; align-items: end;
+}
+.strand-banner .shot { position: absolute; inset: 0; }
+.strand-banner .veil {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(12,15,11,.82) 6%, rgba(12,15,11,.12) 66%);
+}
+.strand-text { position: relative; padding: clamp(1.25rem, 3vw, 2.25rem); color: #f2f4ea; }
+.strand-text h3 {
+  margin: 0 0 .35rem; font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(1.4rem, 4vw, 2.6rem); letter-spacing: -.03em;
+}
+.strand-text p { margin: 0; max-width: 60ch; color: #dfe3d6; }
+.strand-kicker {
+  font-family: var(--font-display); font-size: .7rem; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--accent);
+  display: block; margin-bottom: .5rem;
+}
+.strand .bundles { margin-top: clamp(1.25rem, 3vw, 2rem); }
+
+.bundle {
+  display: grid; gap: clamp(1.25rem, 3vw, 2.5rem);
+  text-decoration: none; color: inherit;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--rule-soft);
+  background: var(--paper);
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+@media (min-width: 900px) {
+  .bundle { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: center; }
+  .bundle:nth-child(even) .cluster { order: -1; }
+}
+.bundle:hover, .bundle:focus-visible { background: var(--panel); border-color: var(--rule); }
+
+.cluster { position: relative; aspect-ratio: 4 / 3; }
+.cluster .shot {
+  position: absolute; border: 1px solid var(--rule);
+  box-shadow: 0 6px 22px rgba(0,0,0,.18);
+  transition: transform 700ms var(--ease);
+}
+/* c1 is the front of the stack: the subject of the project. */
+.cluster .c1 { inset: 8% 26% 8% 0;  z-index: 4; }
+.cluster .c2 { inset: 0 0 34% 42%;  z-index: 3; }
+.cluster .c3 { inset: 52% 6% 0 46%; z-index: 2; }
+.bundle:hover .c1, .bundle:focus-visible .c1 { transform: translate(-3%, -3%) rotate(-1.1deg) scale(1.03); }
+.bundle:hover .c2, .bundle:focus-visible .c2 { transform: translate(5%, -5%) rotate(1.6deg); }
+.bundle:hover .c3, .bundle:focus-visible .c3 { transform: translate(3%, 6%) rotate(-1.8deg); }
+
+.bundle-title {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(1.5rem, 3.4vw, 2.5rem); letter-spacing: -.035em;
+  margin: 0; transition: color var(--dur) var(--ease);
+}
+.bundle:hover .bundle-title { color: var(--accent); }
+.bundle-role {
+  font-family: var(--font-display); font-size: .68rem;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--accent); border: 1px solid currentColor;
+  padding: .15rem .5rem; white-space: nowrap;
+}
+.bundle p { margin: .9rem 0 0; color: var(--ink); max-width: 52ch; }
+
+/* ==========================================================================
+   ACT 5 — DOSSIER
+   ========================================================================== */
+
+.act-dossier { border-top: 1px solid var(--rule); }
+
+.personal-copy { max-width: var(--measure); }
+.personal-copy p { margin: 0 0 1.15rem; }
+.personal-copy p:last-child { margin-bottom: 0; }
+
+.life-grid {
+  display: grid; gap: .9rem; margin-top: clamp(1.75rem, 4vw, 2.75rem);
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+.life-grid .shot {
+  border: 1px solid var(--rule-soft);
+  transition: transform var(--dur) var(--ease);
+}
+.life-grid .shot:hover { transform: translateY(-5px) scale(1.02); z-index: 2; }
+
+/* ==========================================================================
+   REDUCED MOTION / NO JS — everything lands readable and still
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .js .act-hero { height: auto; }
+  .js .hero-pin { position: relative; }
+  .js .hero-shot--a { opacity: 1; }
+  .js .hero-shot--b { display: none; }
+  .js .hero-name { transform: translate3d(0, -50%, 0); }
+  .js .scroll-cue { opacity: 1; }
+
+  .js .montage-row--a, .js .montage-row--b { transform: none; }
+  .js .montage-row { width: 100%; flex-wrap: wrap; justify-content: center; }
+  .js .montage-row .shot { transform: none; }
+
+  .js .act-journey { height: auto; }
+  .js .journey-pin { position: relative; height: auto; overflow: visible; }
+  .js .j-stage { position: relative; inset: auto; opacity: 1; pointer-events: auto;
+                 padding-block: 3rem; transform: none; }
+  .js .j-bg { display: none; }
+  .js .j-city b { transform: none; }
+  .js .j-panel { opacity: 1; transform: none; }
+  .js .j-shots .shot { opacity: 1; transform: none; }
+  .js .journey-map { position: relative; height: auto; }
+  .js .j-bg .shot { clip-path: none; }
+  .js .j-bg .shot img { transform: none; }
+  .js .j-shade { opacity: 1; }
+  .j-dots { display: none; }
+
+  .cluster .shot { transition: none; }
+  .bundle:hover .c1, .bundle:hover .c2, .bundle:hover .c3 { transform: none; }
+}

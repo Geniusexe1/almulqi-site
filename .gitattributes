@@ -1,0 +1,11 @@
+# Normalise line endings in the repo; keep binaries untouched.
+* text=auto eol=lf
+
+*.jpg  binary
+*.jpeg binary
+*.png  binary
+*.webp binary
+*.avif binary
+*.mp4  binary
+*.mov  binary
+*.pdf  binary
