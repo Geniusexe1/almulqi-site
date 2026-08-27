@@ -1,0 +1,14 @@
+# Cloudflare uploads everything in the output directory as a static asset.
+# The repo root is that directory, so the git object store would be uploaded
+# too - and the pack file is far over the 25 MiB per-asset limit. This is what
+# broke the first deploy.
+.git
+.gitignore
+.gitattributes
+.assetsignore
+
+# build-time only; none of it belongs on the public site
+tools
+README.md
+*.py
+*.pyc
