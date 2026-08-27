@@ -1,5 +1,5 @@
-# Cloudflare Pages reads this file at deploy time.
-# https://developers.cloudflare.com/pages/configuration/headers/
+# Read at deploy time by Cloudflare static assets (Workers or Pages).
+# Paths only: absolute URLs are rejected, which is what broke _redirects.
 
 /*
   X-Content-Type-Options: nosniff
