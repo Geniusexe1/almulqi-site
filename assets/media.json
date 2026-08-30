@@ -956,24 +956,6 @@
   "caption": null,
   "use": "montage"
  },
- "strip-table": {
-  "kind": "image",
-  "w": 4032,
-  "h": 3024,
-  "widths": [
-   480,
-   960,
-   1920
-  ],
-  "avg": "#877364",
-  "pos": [
-   57,
-   40
-  ],
-  "alt": "Friends crowded around a table of drinks and snacks.",
-  "caption": null,
-  "use": "montage"
- },
  "strip-ginkgo": {
   "kind": "image",
   "w": 3024,

@@ -178,7 +178,7 @@ MONTAGE_A = ['hero-snow', 'saudi-graduation', 'korea-summit', 'life-statue',
 MONTAGE_B = ['saudi-stage', 'life-bike', 'ankara-lecture', 'shot-img-0188',
              'saudi-street', 'shot-img-1493', 'life-beach',
              'strip-palace', 'strip-tower', 'strip-bridge', 'strip-hanbok',
-             'strip-table', 'strip-ginkgo', 'strip-cat']
+             'strip-ginkgo', 'strip-cat']
 
 LIFE = ['life-friends-meal', 'life-flatbread', 'life-kitchen', 'life-dinner',
         'life-cinnamon', 'life-bike', 'life-img-0910', 'life-beach',
@@ -312,11 +312,17 @@ def main():
     # ------------------------------------------------------------------ act 2
     rows = []
     for cls, names in (('a', MONTAGE_A), ('b', MONTAGE_B)):
-        shots = '\n      '.join(
+        shots = '\n        '.join(
             any_shot(n, '(max-width:700px) 45vw, 24vw',
                      'wide' if M[n]['w'] > M[n]['h'] else '')
             for n in names)
-        rows.append('<div class="montage-row montage-row--%s">\n      %s\n    </div>' % (cls, shots))
+        # the same set twice: the track loops by exactly one copy, so the seam
+        # never shows and the row cannot run out on a wide screen
+        rows.append(
+            '<div class="montage-row montage-row--%s">\n'
+            '      <div class="montage-track">\n        %s\n      </div>\n'
+            '      <div class="montage-track" aria-hidden="true">\n        %s\n      </div>\n'
+            '    </div>' % (cls, shots, shots))
     A('''
   <!-- ============ ACT 2 - MONTAGE ============ -->
   <section class="act-montage" data-scrub aria-label="Photographs">
