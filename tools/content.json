@@ -1,0 +1,89 @@
+{
+  "_note": "All the editable prose on the landing page. Edit here, or run tools/edit.py for a browser editor with a live preview. gen_index.py reads this file, so nothing else needs touching.",
+  "hero": {
+    "role": "I am a robotics engineer specialising in autonomous systems &mdash; perception, navigation and control, working together to finish a mission.",
+    "where": "Mechanical + Electrical Engineering &middot; KAIST, Daejeon &middot; Robotics research intern at the FAIR Lab",
+    "surname": "AL MULQI"
+  },
+  "now": {
+    "heading": "Currently",
+    "fair_title": "Robotics research intern, FAIR Lab",
+    "fair_suffix": "(Field AI and Robotics)",
+    "fair_body": "Relay robots working in tandem over a mesh network, plus porting the lab&rsquo;s stack from ROS&nbsp;1 to ROS&nbsp;2.",
+    "rbnx_title": "Project lead, ROBONEXUS",
+    "rbnx_suffix": "",
+    "rbnx_body": "A mecanum-wheeled CTF robot, autonomous for the first 45 seconds. I designed and created the robot&rsquo;s URDF, built the simulation in Gazebo using ROS, and raised <strong>&#8361;6,000,000</strong> in funding for the project.",
+    "facts": [
+      "KAIST &mdash; Mechanical + Electrical Engineering, expected Feb 2029",
+      "Micro-Robotics club (MR) since March 2025",
+      "KAIST Ambassador &mdash; presented KAIST back home in Saudi Arabia"
+    ]
+  },
+  "work": {
+    "heading": "The work",
+    "ref": "Four builds &middot; 2025&ndash;2026",
+    "robonexus": {
+      "title": "ROBONEXUS",
+      "role": "Project lead",
+      "text": "A mecanum-wheeled robot for a capture-the-flag competition: collect flags, cross a barrier through a 600&nbsp;mm gate, deliver them &mdash; the first 45 seconds with no driver. I designed the machine, built the simulation, and trained the flag detector on 5,001 synthetic renders because no footage of the venue exists."
+    },
+    "drone": {
+      "title": "Autonomous drone",
+      "role": "EE478",
+      "text": "A quadrotor that flies a whole mission alone: read a riddle, hand it to a language model, pick the gate the answer points to, avoid what is in the way, then find one storefront from the air and land on it. Knowing its own altitude turned out to be the hard part."
+    },
+    "car": {
+      "title": "Self-driving racing car",
+      "role": "ME209",
+      "text": "A Raspberry Pi car I built end to end. It follows a white line to the grid under a convolutional network, waits for the lights, then hands over to a PID loop on ultrasonic range to race a walled circuit. Two control paradigms, one vehicle, swapping mid-run."
+    },
+    "caricature": {
+      "title": "Caricature drawing robot",
+      "role": "Software",
+      "text": "A dead 3D printer stripped for its steppers and rebuilt as a plotter that draws your face back at you. The interesting part is between the photo and the pen: the portrait becomes a graph, and Dijkstra orders the strokes so the pen spends its time drawing instead of travelling."
+    }
+  },
+  "skills": {
+    "heading": "What I work with",
+    "ref": "Used on shipped builds"
+  },
+  "journey": {
+    "heading": "Before KAIST",
+    "ankara": {
+      "place": "Ankara",
+      "when": "Oct 2024 - Jan 2025",
+      "country": "T&uuml;rkiye",
+      "lede": "One semester at Middle East Technical University, in a language and a city I did not know.",
+      "facts": [
+        "Electrical Engineering, ODT&Uuml;",
+        "GPA 3.55 / 4.0 &mdash; High Honours"
+      ]
+    },
+    "riyadh": {
+      "place": "Riyadh",
+      "when": "to 2024",
+      "country": "Saudi Arabia",
+      "lede": "School, and the first things I built for other people rather than for myself.",
+      "facts": [
+        "Valedictorian, ranked 1st in the graduating class",
+        "Highest mark in the world, AS-Level Chemistry",
+        "Highest mark in Saudi Arabia, A-Level Physics",
+        "Founded the school&rsquo;s first student club, and ran its PC-building workshops",
+        "Hosted the graduation ceremony to an audience of over a thousand"
+      ]
+    }
+  },
+  "personal": {
+    "heading": "Off the clock",
+    "ref": "The other half",
+    "paragraphs": [
+      "I game, and I run the servers I game on &mdash; which is where the networking and Linux on my skills list actually came from. Nothing teaches you DNS and port forwarding like a friend saying they can&rsquo;t connect.",
+      "I cook, a lot. I like bikes. And I am genuinely interested in the business side of engineering, not just the build &mdash; writing the ROBONEXUS proposal and walking away with &#8361;6,000,000 was one of the more satisfying things I have done, and it was not a technical problem."
+    ]
+  },
+  "contact": {
+    "heading": "Get in touch",
+    "ref": "Open to internships &amp; research",
+    "lede": "I am looking for robotics internships and research positions &mdash; perception, navigation and autonomy on real hardware. If you have something running in the field, I would like to hear about it."
+  }
+}

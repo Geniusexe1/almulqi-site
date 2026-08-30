@@ -7,10 +7,37 @@ an object-position aimed at the faces in it. Hand-writing forty of those is how
 wrong srcset attributes and cropped-off heads get shipped. The OUTPUT is plain
 HTML with no build step; re-running overwrites index.html.
 """
-import json, os
+import json, os, re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 M = json.load(open(os.path.join(ROOT, 'assets', 'media.json'), encoding='utf-8'))
+C = json.load(open(os.path.join(ROOT, 'tools', 'content.json'), encoding='utf-8'))
+
+
+def T(path):
+    """Prose from tools/content.json. Edit it there, or run tools/edit.py."""
+    node = C
+    for key in path.split('.'):
+        node = node[key]
+    return node
+
+
+def fill(html):
+    """Replace @@dotted.path@@ with prose, and @@path|tag@@ with a wrapped list.
+
+    Runs last, so a token can sit anywhere in a %-formatted template without
+    needing a slot in its argument tuple.
+    """
+    def one(m):
+        value = T(m.group(1))
+        tag = m.group(2)
+        if tag:
+            pad = '\n' + ' ' * 12
+            return pad.join('<%s>%s</%s>' % (tag, v, tag) for v in value)
+        return value
+    html = re.sub(r'@@([A-Za-z0-9_.]+)(?:\|(\w+))?@@', one, html)
+    # an empty suffix leaves a stray space before the closing tag
+    return html.replace('</strong> </p>', '</strong></p>')
 
 
 def esc(s):
@@ -98,20 +125,15 @@ def any_shot(name, sizes, cls='', ratio=None, extra=''):
 
 
 STOPS_CHRONOLOGICAL = [
-    dict(id='riyadh', place='Riyadh', when='to 2024', country='Saudi Arabia',
+    dict(id='riyadh', place=T('journey.riyadh.place'), when=T('journey.riyadh.when'),
+         country=T('journey.riyadh.country'), lede=T('journey.riyadh.lede'),
+         facts=T('journey.riyadh.facts'),
          bg='saudi-podium', wipe='top', dark='bottom', side='bottom',
-         lede='School, and the first things I built for other people rather than for myself.',
-         facts=['Valedictorian, ranked 1st in the graduating class',
-                'Highest mark in the world, AS-Level Chemistry',
-                'Highest mark in Saudi Arabia, A-Level Physics',
-                "Founded the school's first student club, and ran its PC-building workshops",
-                'Hosted the graduation ceremony to an audience of over a thousand'],
          shots=['saudi-graduation', 'saudi-stage', 'saudi-pcbuild-1', 'saudi-img-0947']),
-    dict(id='ankara', place='Ankara', when='Oct 2024 - Jan 2025', country='T&uuml;rkiye',
+    dict(id='ankara', place=T('journey.ankara.place'), when=T('journey.ankara.when'),
+         country=T('journey.ankara.country'), lede=T('journey.ankara.lede'),
+         facts=T('journey.ankara.facts'),
          bg='ankara-snow', wipe='left', dark='right', side='right',
-         lede='One semester at Middle East Technical University, in a language and a city I did not know.',
-         facts=['Electrical Engineering, ODT&Uuml;',
-                'GPA 3.55 / 4.0 &mdash; High Honours'],
          shots=['ankara-lecture', 'ankara-f1', 'ankara-img-5856', 'ankara']),
     dict(id='daejeon', place='Daejeon', when='Feb 2025 &mdash;', country='South Korea',
          bg='korea-blossom', wipe='right', dark='left', side='left',
@@ -131,38 +153,26 @@ STOPS_CHRONOLOGICAL = [
 STOPS = list(reversed(STOPS_CHRONOLOGICAL[:2]))
 
 ROBONEXUS = dict(
-    href='projects/robonexus.html', title='ROBONEXUS', role='Project lead', now=True,
-    text='A mecanum-wheeled robot for a capture-the-flag competition: collect flags, cross a '
-         'barrier through a 600&nbsp;mm gate, deliver them &mdash; the first 45 seconds with no '
-         'driver. I designed the machine, built the simulation, and trained the flag detector on '
-         '5,001 synthetic renders because no footage of the venue exists.',
+    href='projects/robonexus.html', title=T('work.robonexus.title'), role=T('work.robonexus.role'), now=True,
+    text=T('work.robonexus.text'),
     dims=[('&#8361;6,000,000', 'funding secured'), ('0.940', 'detector mAP@50'), ('9.51', 'kg, aluminium')],
     cluster=[('robot-iso', 'c1'), ('robonexus-unity', 'c2'), ('robonexus-sim', 'c3')])
 
 CARICATURE = dict(
-    href='projects/caricature-robot.html', title='Caricature drawing robot', role='Software',
-    text='A dead 3D printer stripped for its steppers and rebuilt as a plotter that draws your '
-         'face back at you. The interesting part is between the photo and the pen: the portrait '
-         'becomes a graph, and Dijkstra orders the strokes so the pen spends its time drawing '
-         'instead of travelling.',
+    href='projects/caricature-robot.html', title=T('work.caricature.title'), role=T('work.caricature.role'),
+    text=T('work.caricature.text'),
     dims=[('3', 'axes: X, Y, pen up/down'), ('Dijkstra', 'stroke ordering'), ('ESP32', 'G-code over Wi-Fi')],
     cluster=[('caricature-output', 'c1'), ('caricature-drawing', 'c2'), ('caricature-portrait', 'c3')])
 
 DRONE = dict(
-    href='projects/autonomous-drone.html', title='Autonomous drone', role='EE478',
-    text='A quadrotor that flies a whole mission alone: read a riddle, hand it to a language '
-         'model, pick the gate the answer points to, avoid what is in the way, then find one '
-         'storefront from the air and land on it. Knowing its own altitude turned out to be the '
-         'hard part.',
+    href='projects/autonomous-drone.html', title=T('work.drone.title'), role=T('work.drone.role'),
+    text=T('work.drone.text'),
     dims=[('6', 'gates, 3 decision pairs'), ('0.70', 'm cruise altitude'), ('13', 'm of drift, fixed')],
     cluster=[('drone-hardware', 'c1'), ('drone-course', 'c2'), ('drone-reprojection', 'c3')])
 
 CAR = dict(
-    href='projects/racing-car.html', title='Self-driving racing car', role='ME209',
-    text='A Raspberry Pi car I built end to end. It follows a white line to the grid under a '
-         'convolutional network, waits for the lights, then hands over to a PID loop on '
-         'ultrasonic range to race a walled circuit. Two control paradigms, one vehicle, '
-         'swapping mid-run.',
+    href='projects/racing-car.html', title=T('work.car.title'), role=T('work.car.role'),
+    text=T('work.car.text'),
     dims=[('2', 'controllers, one handoff'), ('CNN', 'line following, PyTorch'), ('PID', 'wall keeping, ultrasound')],
     cluster=[('car-bench', 'c1'), ('car-racing', 'c2'), ('car-line', 'c3')])
 
@@ -297,12 +307,9 @@ def main():
       <h1 class="hero-name"><span>ABDULLAH</span></h1>
       <div class="hero-foot">
         <div>
-          <h2>AL MULQI</h2>
-          <p class="hero-where">Mechanical + Electrical Engineering &middot; KAIST,
-             Daejeon &middot; Robotics research intern at the FAIR Lab</p>
-          <p>I build autonomous robots &mdash; drones and ground vehicles &mdash; and the
-             perception, navigation and control software that makes them do
-             something useful with nobody holding the sticks.</p>
+          <h2>@@hero.surname@@</h2>
+          <p class="hero-where">@@hero.where@@</p>
+          <p>@@hero.role@@</p>
         </div>
         <div class="right"><span class="scroll-cue">Scroll</span></div>
       </div>
@@ -360,7 +367,7 @@ def main():
   <!-- ============ ACT 3 - THE JOURNEY ============ -->
   <section class="act-journey" id="journey" data-scrub="pin" data-stage="0"
            aria-labelledby="journey-h">
-    <h2 id="journey-h" class="visually-hidden">Before KAIST</h2>
+    <h2 id="journey-h" class="visually-hidden">@@journey.heading@@</h2>
     <div class="journey-pin">
       <div class="j-bg" aria-hidden="true">
         %s
@@ -384,7 +391,7 @@ def main():
     <div class="wrap">
       <div class="section-head reveal">
         <h2 id="work-h">The work</h2>
-        <span class="ref">Four builds &middot; 2025&ndash;2026</span>
+        <span class="ref">@@work.ref@@</span>
       </div>
       <div class="bundles">
       %s
@@ -400,21 +407,14 @@ def main():
   <section class="section act-dossier" id="now" aria-labelledby="now-h">
     <div class="wrap">
       <div class="now reveal">
-        <h2 id="now-h"><span class="pulse" aria-hidden="true"></span>Currently</h2>
+        <h2 id="now-h"><span class="pulse" aria-hidden="true"></span>@@now.heading@@</h2>
         <div>
-          <p class="role"><strong>Robotics research intern, FAIR Lab</strong>
-             (Field AI and Robotics) &mdash; since August 2026.</p>
-          <p>Mobile robots and mesh networking, and porting the lab&rsquo;s stack from
-             ROS&nbsp;1 to ROS&nbsp;2.</p>
-          <p class="role" style="margin-top:1.4rem"><strong>Project lead, ROBONEXUS</strong>
-             &mdash; KAIST Micro-Robotics club, since 2025.</p>
-          <p>A mecanum-wheeled capture-the-flag robot that plays its first 45 seconds with
-             no driver. I designed the machine, built the simulation it was developed in,
-             and raised the <strong>&#8361;6,000,000</strong> that paid for it.</p>
+          <p class="role"><strong>@@now.fair_title@@</strong> @@now.fair_suffix@@</p>
+          <p>@@now.fair_body@@</p>
+          <p class="role" style="margin-top:1.4rem"><strong>@@now.rbnx_title@@</strong> @@now.rbnx_suffix@@</p>
+          <p>@@now.rbnx_body@@</p>
           <ul class="now-facts">
-            <li>KAIST &mdash; Mechanical + Electrical Engineering, expected Feb 2029</li>
-            <li>Micro-Robotics club (MR) since March 2025</li>
-            <li>KAIST Ambassador &mdash; presented KAIST back home in Saudi Arabia</li>
+            @@now.facts|li@@
           </ul>
         </div>
       </div>
@@ -425,7 +425,7 @@ def main():
     <div class="wrap">
       <div class="section-head reveal">
         <h2 id="skills-h">What I work with</h2>
-        <span class="ref">Used on shipped builds</span>
+        <span class="ref">@@skills.ref@@</span>
       </div>
       <div class="skills">
         <div class="skill reveal"><h3>Robotics &amp; autonomy</h3><ul>
@@ -450,17 +450,11 @@ def main():
   <section class="section" id="personal" aria-labelledby="personal-h">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2 id="personal-h">Off the clock</h2>
-        <span class="ref">The other half</span>
+        <h2 id="personal-h">@@personal.heading@@</h2>
+        <span class="ref">@@personal.ref@@</span>
       </div>
       <div class="personal-copy reveal">
-        <p>I game, and I run the servers I game on &mdash; which is where the networking and
-           Linux on my skills list actually came from. Nothing teaches you DNS and port
-           forwarding like a friend saying they can&rsquo;t connect.</p>
-        <p>I cook, a lot. I like bikes. And I am genuinely interested in the business side
-           of engineering, not just the build &mdash; writing the ROBONEXUS proposal and
-           walking away with &#8361;6,000,000 was one of the more satisfying things I have
-           done, and it was not a technical problem.</p>
+        @@personal.paragraphs|p@@
       </div>
       <div class="life-grid reveal">
       %s
@@ -471,14 +465,12 @@ def main():
   <section class="section" id="contact" aria-labelledby="contact-h">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2 id="contact-h">Get in touch</h2>
-        <span class="ref">Open to internships &amp; research</span>
+        <h2 id="contact-h">@@contact.heading@@</h2>
+        <span class="ref">@@contact.ref@@</span>
       </div>
       <div class="contact-grid">
         <div class="reveal">
-          <p class="lede">I am looking for robotics internships and research positions &mdash;
-             perception, navigation and autonomy on real hardware. If you have something
-             running in the field, I would like to hear about it.</p>
+          <p class="lede">@@contact.lede@@</p>
           <p style="margin-top:1.75rem">
             <a class="button" href="assets/cv/abdullah-al-mulqi-cv.pdf" download>Download CV
               <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -510,6 +502,9 @@ def main():
     rest = dossier[personal_at:]
     # what I am doing, what I can do, what I built, then how I got here
     html = '\n'.join([head, hero, montage, now_block, work, skills, journey, rest, tail])
+    html = fill(html)   # @@tokens@@ last, so %-formatting never sees them
+    left = re.findall(r'@@[^@]+@@', html)
+    assert not left, 'unresolved content tokens: %s' % left
     open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8', newline='\n').write(html)
     print('wrote index.html  %.1f KB' % (len(html) / 1024))
 
