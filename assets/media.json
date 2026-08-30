@@ -758,6 +758,258 @@
   "caption": null,
   "use": "personal"
  },
+ "strip-stage": {
+  "kind": "image",
+  "w": 4032,
+  "h": 3024,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#323884",
+  "pos": [
+   47,
+   44
+  ],
+  "alt": "Abdullah and friends on a blue-lit stage during a performance.",
+  "caption": null,
+  "use": "montage"
+ },
+ "strip-aquarium": {
+  "kind": "image",
+  "w": 4284,
+  "h": 5712,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#3d6ba9",
+  "pos": [
+   70,
+   52
+  ],
+  "alt": "Abdullah and two friends sitting in front of a large aquarium tank.",
+  "caption": null,
+  "use": "montage"
+ },
+ "strip-blossom-sun": {
+  "kind": "image",
+  "w": 3024,
+  "h": 4032,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#453b31",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "Cherry blossom branches lit from behind by a low sun.",
+  "caption": null,
+  "use": "montage"
+ },
+ "strip-cinema": {
+  "kind": "image",
+  "w": 2316,
+  "h": 3088,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#6f5859",
+  "pos": [
+   45,
+   44
+  ],
+  "alt": "Abdullah and a friend grinning back at the camera from cinema seats.",
+  "caption": null,
+  "use": "montage"
+ },
+ "strip-boardwalk": {
+  "kind": "image",
+  "w": 4032,
+  "h": 3024,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#827f73",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "Abdullah on a mountain boardwalk with a cliff face and forest behind him.",
+  "caption": null,
+  "use": "montage"
+ },
+ "strip-stairs": {
+  "kind": "image",
+  "w": 3024,
+  "h": 4032,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#6f6b66",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "A steep street stairway painted in rainbow stripes and lined with shopfronts.",
+  "caption": null,
+  "use": "montage"
+ },
+ "strip-snow-light": {
+  "kind": "image",
+  "w": 4284,
+  "h": 5712,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#76726f",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "Snow falling through the beam of a floodlight at night.",
+  "caption": null,
+  "use": "montage"
+ },
+ "strip-palace": {
+  "kind": "image",
+  "w": 4284,
+  "h": 5712,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#8d897f",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "A Korean palace gate with visitors in hanbok crossing the courtyard.",
+  "caption": null,
+  "use": "montage"
+ },
+ "strip-tower": {
+  "kind": "image",
+  "w": 4284,
+  "h": 5712,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#403d3e",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "A tall tower lit green at night above a glowing shopping complex.",
+  "caption": null,
+  "use": "montage"
+ },
+ "strip-bridge": {
+  "kind": "image",
+  "w": 3024,
+  "h": 4032,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#8e929a",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "A red and blue arch bridge over a riverside path.",
+  "caption": null,
+  "use": "montage"
+ },
+ "strip-hanbok": {
+  "kind": "image",
+  "w": 4284,
+  "h": 5712,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#7f756b",
+  "pos": [
+   56,
+   55
+  ],
+  "alt": "Abdullah and two friends in hanbok outside a rental shop.",
+  "caption": null,
+  "use": "montage"
+ },
+ "strip-table": {
+  "kind": "image",
+  "w": 4032,
+  "h": 3024,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#877364",
+  "pos": [
+   57,
+   40
+  ],
+  "alt": "Friends crowded around a table of drinks and snacks.",
+  "caption": null,
+  "use": "montage"
+ },
+ "strip-ginkgo": {
+  "kind": "image",
+  "w": 3024,
+  "h": 4032,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#796848",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "A ginkgo tree in full yellow against a clear blue sky.",
+  "caption": null,
+  "use": "montage"
+ },
+ "strip-cat": {
+  "kind": "image",
+  "w": 4284,
+  "h": 5712,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#746c67",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "A cat sitting on a tiled floor, looking up at the camera.",
+  "caption": null,
+  "use": "montage"
+ },
  "car-racing": {
   "kind": "video",
   "w": 540,

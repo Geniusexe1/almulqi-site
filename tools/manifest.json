@@ -279,6 +279,90 @@
       "name": "life-statue",
       "use": "personal",
       "alt": "Abdullah copying the pose of a painted warrior statue at the gate of a Korean palace."
+    },
+    {
+      "src": "IMG_0361.HEIC",
+      "name": "strip-stage",
+      "use": "montage",
+      "alt": "Abdullah and friends on a blue-lit stage during a performance."
+    },
+    {
+      "src": "IMG_7596.HEIC",
+      "name": "strip-aquarium",
+      "use": "montage",
+      "alt": "Abdullah and two friends sitting in front of a large aquarium tank."
+    },
+    {
+      "src": "IMG_7326.HEIC",
+      "name": "strip-blossom-sun",
+      "use": "montage",
+      "alt": "Cherry blossom branches lit from behind by a low sun."
+    },
+    {
+      "src": "IMG_8109.HEIC",
+      "name": "strip-cinema",
+      "use": "montage",
+      "alt": "Abdullah and a friend grinning back at the camera from cinema seats."
+    },
+    {
+      "src": "IMG_9120.HEIC",
+      "name": "strip-boardwalk",
+      "use": "montage",
+      "alt": "Abdullah on a mountain boardwalk with a cliff face and forest behind him."
+    },
+    {
+      "src": "IMG_7513.HEIC",
+      "name": "strip-stairs",
+      "use": "montage",
+      "alt": "A steep street stairway painted in rainbow stripes and lined with shopfronts."
+    },
+    {
+      "src": "IMG_9630.HEIC",
+      "name": "strip-snow-light",
+      "use": "montage",
+      "alt": "Snow falling through the beam of a floodlight at night."
+    },
+    {
+      "src": "IMG_7531.HEIC",
+      "name": "strip-palace",
+      "use": "montage",
+      "alt": "A Korean palace gate with visitors in hanbok crossing the courtyard."
+    },
+    {
+      "src": "IMG_7643.HEIC",
+      "name": "strip-tower",
+      "use": "montage",
+      "alt": "A tall tower lit green at night above a glowing shopping complex."
+    },
+    {
+      "src": "IMG_7654.HEIC",
+      "name": "strip-bridge",
+      "use": "montage",
+      "alt": "A red and blue arch bridge over a riverside path."
+    },
+    {
+      "src": "IMG_8913.HEIC",
+      "name": "strip-hanbok",
+      "use": "montage",
+      "alt": "Abdullah and two friends in hanbok outside a rental shop."
+    },
+    {
+      "src": "IMG_9481.HEIC",
+      "name": "strip-table",
+      "use": "montage",
+      "alt": "Friends crowded around a table of drinks and snacks."
+    },
+    {
+      "src": "IMG_9468.HEIC",
+      "name": "strip-ginkgo",
+      "use": "montage",
+      "alt": "A ginkgo tree in full yellow against a clear blue sky."
+    },
+    {
+      "src": "IMG_7726.HEIC",
+      "name": "strip-cat",
+      "use": "montage",
+      "alt": "A cat sitting on a tiled floor, looking up at the camera."
     }
   ],
   "videos": [

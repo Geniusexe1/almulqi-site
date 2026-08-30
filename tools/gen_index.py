@@ -158,7 +158,7 @@ DRONE = dict(
     cluster=[('drone-hardware', 'c1'), ('drone-course', 'c2'), ('drone-reprojection', 'c3')])
 
 CAR = dict(
-    href='projects/racing-car.html', title='Self-driving racing car', role='ME209 &middot; solo',
+    href='projects/racing-car.html', title='Self-driving racing car', role='ME209',
     text='A Raspberry Pi car I built end to end. It follows a white line to the grid under a '
          'convolutional network, waits for the lights, then hands over to a PID loop on '
          'ultrasonic range to race a walled circuit. Two control paradigms, one vehicle, '
@@ -169,10 +169,16 @@ CAR = dict(
 # ROBONEXUS first: it is the one still running.
 BUNDLES = [ROBONEXUS, DRONE, CAR, CARICATURE]
 
+# Long enough that both rows still overflow a wide screen; a short row
+# parks with empty space at one end and looks broken.
 MONTAGE_A = ['hero-snow', 'saudi-graduation', 'korea-summit', 'life-statue',
-             'life-img-0910', 'caricature-portrait', 'shot-img-1245']
+             'life-img-0910', 'caricature-portrait', 'shot-img-1245',
+             'strip-stage', 'strip-aquarium', 'strip-blossom-sun', 'strip-cinema',
+             'strip-boardwalk', 'strip-stairs', 'strip-snow-light']
 MONTAGE_B = ['saudi-stage', 'life-bike', 'ankara-lecture', 'shot-img-0188',
-             'saudi-street', 'shot-img-1493', 'life-beach']
+             'saudi-street', 'shot-img-1493', 'life-beach',
+             'strip-palace', 'strip-tower', 'strip-bridge', 'strip-hanbok',
+             'strip-table', 'strip-ginkgo', 'strip-cat']
 
 LIFE = ['life-friends-meal', 'life-flatbread', 'life-kitchen', 'life-dinner',
         'life-cinnamon', 'life-bike', 'life-img-0910', 'life-beach',
@@ -292,6 +298,8 @@ def main():
       <div class="hero-foot">
         <div>
           <h2>AL MULQI</h2>
+          <p class="hero-where">Mechanical + Electrical Engineering &middot; KAIST,
+             Daejeon &middot; Robotics research intern at the FAIR Lab</p>
           <p>I build autonomous robots &mdash; drones and ground vehicles &mdash; and the
              perception, navigation and control software that makes them do
              something useful with nobody holding the sticks.</p>
