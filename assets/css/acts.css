@@ -22,15 +22,17 @@
 .act-hero { position: relative; }
 .hero-pin  { position: relative; height: 100svh; overflow: hidden; background: #0d0f0d; }
 
-.js .act-hero { height: 230vh; }
+/* Short enough that the very first scroll visibly changes the page. A long
+   pin reads as a page that is stuck, not as a page that is designed. */
+.js .act-hero { height: 165vh; }
 .js .hero-pin { position: sticky; top: 0; }
 
 .hero-shot { position: absolute; inset: 0; }
 .hero-shot img { width: 100%; height: 100%; object-fit: cover; }
 
-.js .hero-shot--a { opacity: clamp(0, calc(1.55 - var(--p, 0) * 2.6), 1); }
+.js .hero-shot--a { opacity: clamp(0, calc(1.42 - var(--p, 0) * 2.9), 1); }
 .hero-shot--b { opacity: 0; }
-.js .hero-shot--b { opacity: clamp(0, calc(var(--p, 0) * 2.6 - 0.75), 1); }
+.js .hero-shot--b { opacity: clamp(0, calc(var(--p, 0) * 2.9 - 0.62), 1); }
 
 .hero-scrim {
   position: absolute; inset: 0;
@@ -123,7 +125,7 @@
 .act-journey { position: relative; background: #20241d; color: #f6f8ef; }
 .journey-pin { position: relative; }
 
-.js .act-journey { height: 400vh; }
+.js .act-journey { height: 300vh; }
 .js .journey-pin { position: sticky; top: 0; height: 100svh; overflow: hidden; }
 
 /* --- the photograph behind each stage ----------------------------------- */

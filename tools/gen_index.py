@@ -97,9 +97,9 @@ def any_shot(name, sizes, cls='', ratio=None, extra=''):
             else pic(name, sizes, cls, ratio=ratio, extra=extra))
 
 
-STOPS = [
+STOPS_CHRONOLOGICAL = [
     dict(id='riyadh', place='Riyadh', when='to 2024', country='Saudi Arabia',
-         bg='saudi-podium', wipe='right', dark='left', side='left',
+         bg='saudi-podium', wipe='top', dark='bottom', side='bottom',
          lede='School, and the first things I built for other people rather than for myself.',
          facts=['Valedictorian, ranked 1st in the graduating class',
                 'Highest mark in the world, AS-Level Chemistry',
@@ -114,7 +114,7 @@ STOPS = [
                 'GPA 3.55 / 4.0 &mdash; High Honours'],
          shots=['ankara-lecture', 'ankara-f1', 'ankara-img-5856', 'ankara']),
     dict(id='daejeon', place='Daejeon', when='Feb 2025 &mdash;', country='South Korea',
-         bg='korea-blossom', wipe='top', dark='bottom', side='bottom',
+         bg='korea-blossom', wipe='right', dark='left', side='left',
          lede='KAIST, a double degree, and the point where the projects got serious.',
          facts=['Mechanical + Electrical Engineering, expected Feb 2029',
                 'Micro-Robotics club since March 2025',
@@ -123,6 +123,10 @@ STOPS = [
                 'Robotics research intern at the FAIR Lab since August 2026'],
          shots=['kaist-ambassador', 'car-bench', 'life-bike', 'life-statue']),
 ]
+
+# Reverse-chronological: a reader gets the current position first and only
+# reaches school if they care enough to keep going.
+STOPS = list(reversed(STOPS_CHRONOLOGICAL))
 
 ROBONEXUS = dict(
     href='projects/robonexus.html', title='ROBONEXUS', role='Project lead',
@@ -192,7 +196,7 @@ HEAD = '''<!doctype html>
 <meta property="og:image" content="https://almulqi.com/assets/img/hero-talk-1920.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23eceee6'/><path d='M3 13V3h10' fill='none' stroke='%230e110c' stroke-width='1.6'/><circle cx='11' cy='11' r='2' fill='%237a4b0d'/></svg>">
-<link rel="preload" as="image" href="assets/img/hero-snow-1920.avif" type="image/avif" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/hero-talk-1920.avif" type="image/avif" fetchpriority="high">
 <link rel="stylesheet" href="assets/css/site.css">
 <link rel="stylesheet" href="assets/css/acts.css">
 <script>
@@ -228,8 +232,8 @@ HEAD = '''<!doctype html>
       Abdullah Al Mulqi
     </a>
     <nav class="site-nav" aria-label="Sections">
-      <a href="#journey">Journey</a>
       <a href="#work" class="nav-keep">Work</a>
+      <a href="#journey">Journey</a>
       <a href="#skills">Skills</a>
       <a href="#contact" class="nav-keep">Contact</a>
     </nav>
@@ -296,7 +300,7 @@ def main():
         <div class="right"><span class="scroll-cue">Scroll</span></div>
       </div>
     </div>
-  </section>''' % (hero_img('hero-snow'), hero_img('hero-talk')))
+  </section>''' % (hero_img('hero-talk'), hero_img('hero-snow')))
 
     # ------------------------------------------------------------------ act 2
     rows = []
@@ -342,7 +346,7 @@ def main():
   <!-- ============ ACT 3 - THE JOURNEY ============ -->
   <section class="act-journey" id="journey" data-scrub="pin" data-stage="0"
            aria-labelledby="journey-h">
-    <h2 id="journey-h" class="visually-hidden">The journey</h2>
+    <h2 id="journey-h" class="visually-hidden">Where I am, and how I got here</h2>
     <div class="journey-pin">
       <div class="j-bg" aria-hidden="true">
         %s
@@ -488,7 +492,15 @@ def main():
   </section>''' % life)
 
     A(TAIL)
-    html = '\n'.join(out)
+
+    # out is [head, hero, montage, journey, work, dossier, tail]. Lift the
+    # "Currently" block out of the dossier and rebuild in the order a reviewer
+    # actually wants: what I am doing now, then the work, then the history.
+    head, hero, montage, journey, work, dossier, tail = out
+    marker = '\n  <section class="section" id="skills"'
+    cut = dossier.index(marker)
+    now_block, rest = dossier[:cut], dossier[cut:]
+    html = '\n'.join([head, hero, montage, now_block, work, journey, rest, tail])
     open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8', newline='\n').write(html)
     print('wrote index.html  %.1f KB' % (len(html) / 1024))
 
