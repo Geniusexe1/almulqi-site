@@ -245,6 +245,14 @@ h1, h2, h3, h4 { font-weight: 600; line-height: 1.12; margin: 0; letter-spacing:
   color: var(--ink);
   border-bottom-color: var(--accent);
 }
+/* The CV is the one thing a reviewer may want without reading anything, so it
+   sits in the header rather than only at the foot of the page. */
+.site-nav a.nav-cv {
+  border: 1px solid var(--accent); color: var(--accent);
+  padding: .3rem .7rem; margin-left: .35rem;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.site-nav a.nav-cv:hover { background: var(--accent); color: var(--paper); border-bottom-color: var(--accent); }
 @media (max-width: 640px) {
   .site-nav a:not(.nav-keep) { display: none; }
 }
@@ -270,6 +278,16 @@ h1, h2, h3, h4 { font-weight: 600; line-height: 1.12; margin: 0; letter-spacing:
 }
 .now p { margin: 0; max-width: var(--measure); }
 .now p + p { margin-top: .85rem; color: var(--ink); }
+.now-facts {
+  margin: 1.4rem 0 0; padding: 0; list-style: none;
+  display: grid; gap: .4rem;
+  border-top: 1px solid var(--rule-soft); padding-top: 1.1rem;
+}
+.now-facts li { position: relative; padding-left: 1rem; color: var(--ink-2); font-size: .96rem; }
+.now-facts li::before {
+  content: ""; position: absolute; left: 0; top: .62em;
+  width: .45rem; height: 1px; background: var(--accent);
+}
 .now .role { font-size: var(--step-1); }
 .now .role strong { font-weight: 600; }
 

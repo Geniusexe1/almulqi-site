@@ -125,7 +125,7 @@
 .act-journey { position: relative; background: #20241d; color: #f6f8ef; }
 .journey-pin { position: relative; }
 
-.js .act-journey { height: 300vh; }
+.js .act-journey { height: 200vh; }
 .js .journey-pin { position: sticky; top: 0; height: 100svh; overflow: hidden; }
 
 /* --- the photograph behind each stage ----------------------------------- */
@@ -335,32 +335,6 @@
 .act-work { padding-block: clamp(3.5rem, 8vw, 7rem); }
 .bundles { display: grid; gap: clamp(2rem, 5vw, 3.5rem); }
 
-/* a club or course that the projects underneath belong to */
-.strand { margin-bottom: clamp(2.5rem, 6vw, 4.5rem); }
-.strand-banner {
-  position: relative; overflow: hidden;
-  border: 1px solid var(--rule);
-  min-height: clamp(200px, 28vw, 340px);
-  display: grid; align-items: end;
-}
-.strand-banner .shot { position: absolute; inset: 0; }
-.strand-banner .veil {
-  position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(12,15,11,.82) 6%, rgba(12,15,11,.12) 66%);
-}
-.strand-text { position: relative; padding: clamp(1.25rem, 3vw, 2.25rem); color: #f2f4ea; }
-.strand-text h3 {
-  margin: 0 0 .35rem; font-family: var(--font-display); font-weight: 700;
-  font-size: clamp(1.4rem, 4vw, 2.6rem); letter-spacing: -.03em;
-}
-.strand-text p { margin: 0; max-width: 60ch; color: #dfe3d6; }
-.strand-kicker {
-  font-family: var(--font-display); font-size: .7rem; letter-spacing: .2em;
-  text-transform: uppercase; color: var(--accent);
-  display: block; margin-bottom: .5rem;
-}
-.strand .bundles { margin-top: clamp(1.25rem, 3vw, 2rem); }
-
 .bundle {
   display: grid; gap: clamp(1.25rem, 3vw, 2.5rem);
   text-decoration: none; color: inherit;
@@ -401,6 +375,16 @@
   color: var(--accent); border: 1px solid currentColor;
   padding: .15rem .5rem; white-space: nowrap;
 }
+/* filled rather than outlined, so the live project is the one thing in the
+   work list that reads as loud */
+.bundle-now {
+  font-family: var(--font-display); font-size: .68rem;
+  letter-spacing: .14em; text-transform: uppercase;
+  background: var(--accent); color: var(--paper);
+  padding: .2rem .55rem; white-space: nowrap;
+}
+.bundle-now::before { content: "CF"; margin-right: .4rem; font-size: .7em;
+                      vertical-align: .12em; }
 .bundle p { margin: .9rem 0 0; color: var(--ink); max-width: 52ch; }
 
 /* ==========================================================================

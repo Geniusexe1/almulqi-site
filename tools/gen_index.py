@@ -124,12 +124,14 @@ STOPS_CHRONOLOGICAL = [
          shots=['kaist-ambassador', 'car-bench', 'life-bike', 'life-statue']),
 ]
 
-# Reverse-chronological: a reader gets the current position first and only
-# reaches school if they care enough to keep going.
-STOPS = list(reversed(STOPS_CHRONOLOGICAL))
+# Daejeon is deliberately absent: everything it said - KAIST, the club, the
+# funding, the lab - is in Currently at the top of the page, and saying it
+# twice made the journey read as filler. What is left is the part that
+# appears nowhere else, reverse-chronological, at the foot of the page.
+STOPS = list(reversed(STOPS_CHRONOLOGICAL[:2]))
 
 ROBONEXUS = dict(
-    href='projects/robonexus.html', title='ROBONEXUS', role='Project lead',
+    href='projects/robonexus.html', title='ROBONEXUS', role='Project lead', now=True,
     text='A mecanum-wheeled robot for a capture-the-flag competition: collect flags, cross a '
          'barrier through a 600&nbsp;mm gate, deliver them &mdash; the first 45 seconds with no '
          'driver. I designed the machine, built the simulation, and trained the flag detector on '
@@ -164,13 +166,8 @@ CAR = dict(
     dims=[('2', 'controllers, one handoff'), ('CNN', 'line following, PyTorch'), ('PID', 'wall keeping, ultrasound')],
     cluster=[('car-bench', 'c1'), ('car-racing', 'c2'), ('car-line', 'c3')])
 
-STRAND = dict(
-    kicker='KAIST Micro-Robotics Club', title='MR', banner='mr-banner',
-    text='I joined MR in March 2025 and have built two robots with it. It is also where I first '
-         'had to raise money, run a team and answer for a schedule rather than just write the code.',
-    bundles=[ROBONEXUS, CARICATURE])
-
-LOOSE = [DRONE, CAR]
+# ROBONEXUS first: it is the one still running.
+BUNDLES = [ROBONEXUS, DRONE, CAR, CARICATURE]
 
 MONTAGE_A = ['hero-snow', 'saudi-graduation', 'korea-summit', 'life-statue',
              'life-img-0910', 'caricature-portrait', 'shot-img-1245']
@@ -236,6 +233,7 @@ HEAD = '''<!doctype html>
       <a href="#journey">Journey</a>
       <a href="#skills">Skills</a>
       <a href="#contact" class="nav-keep">Contact</a>
+      <a href="assets/cv/abdullah-al-mulqi-cv.pdf" class="nav-cv nav-keep" download>CV</a>
     </nav>
   </div>
 </header>
@@ -258,11 +256,12 @@ TAIL = '''
 
 def bundle_html(b):
     cl = '\n        '.join(cluster_item(n, c) for n, c in b['cluster'])
+    live = ('<span class="bundle-now">Currently</span>' if b.get('now') else '')
     return '''<a class="bundle reveal" href="%s">
         <div>
           <div class="project-head">
             <h3 class="bundle-title">%s</h3>
-            <span class="bundle-role">%s</span>
+            <span class="bundle-role">%s</span>%s
           </div>
           <p>%s</p>
           <span class="more">Read the case study</span>
@@ -270,7 +269,7 @@ def bundle_html(b):
         <div class="cluster">
         %s
         </div>
-      </a>''' % (b['href'], b['title'], b['role'], b['text'], cl)
+      </a>''' % (b['href'], b['title'], b['role'], live, b['text'], cl)
 
 
 def main():
@@ -323,7 +322,8 @@ def main():
                             extra=' data-i="%d" data-wipe="%s"' % (i, st['wipe'])))
         shades.append('<div class="j-shade" data-i="%d" data-dark="%s"></div>'
                       % (i, st['dark']))
-        dots.append('<span class="dot"></span>')
+        dots.append('<span class="dot" style="top:%d%%"></span>'
+                    % (0 if len(STOPS) < 2 else round(i * 100 / (len(STOPS) - 1))))
         shots = '\n            '.join(
             any_shot(n, '(max-width:900px) 30vw, 10vw', ratio='3/4') for n in st['shots'])
         facts = '\n              '.join('<li>%s</li>' % f for f in st['facts'])
@@ -346,7 +346,7 @@ def main():
   <!-- ============ ACT 3 - THE JOURNEY ============ -->
   <section class="act-journey" id="journey" data-scrub="pin" data-stage="0"
            aria-labelledby="journey-h">
-    <h2 id="journey-h" class="visually-hidden">Where I am, and how I got here</h2>
+    <h2 id="journey-h" class="visually-hidden">Before KAIST</h2>
     <div class="journey-pin">
       <div class="j-bg" aria-hidden="true">
         %s
@@ -364,24 +364,6 @@ def main():
                   '\n        '.join(stages), '\n        '.join(dots)))
 
     # ------------------------------------------------------------------ act 4
-    strand = '''<section class="strand reveal">
-        <div class="strand-banner">
-          %s
-          <div class="veil"></div>
-          <div class="strand-text">
-            <span class="strand-kicker">%s</span>
-            <h3>%s</h3>
-            <p>%s</p>
-          </div>
-        </div>
-        <div class="bundles">
-        %s
-        </div>
-      </section>''' % (
-        any_shot(STRAND['banner'], '(max-width:1180px) 100vw, 1180px'),
-        STRAND['kicker'], STRAND['title'], STRAND['text'],
-        '\n        '.join(bundle_html(b) for b in STRAND['bundles']))
-
     A('''
   <!-- ============ ACT 4 - THE WORK ============ -->
   <section class="section act-work" id="work" aria-labelledby="work-h">
@@ -393,9 +375,8 @@ def main():
       <div class="bundles">
       %s
       </div>
-      %s
     </div>
-  </section>''' % ('\n      '.join(bundle_html(b) for b in LOOSE), strand))
+  </section>''' % '\n      '.join(bundle_html(b) for b in BUNDLES))
 
     # ------------------------------------------------------------------ act 5
     life = '\n      '.join(pic(n, '(max-width:700px) 46vw, 22vw', ratio='4/3') for n in LIFE)
@@ -407,9 +388,20 @@ def main():
       <div class="now reveal">
         <h2 id="now-h"><span class="pulse" aria-hidden="true"></span>Currently</h2>
         <div>
-          <p class="role"><strong>Robotics research intern, FAIR Lab</strong> (Field AI and Robotics) &mdash; since August 2026.</p>
-          <p>Mobile robots and mesh networking, and porting the lab&rsquo;s stack from ROS&nbsp;1 to ROS&nbsp;2.
-             Alongside it I lead the ROBONEXUS robot team at KAIST&rsquo;s Micro-Robotics club.</p>
+          <p class="role"><strong>Robotics research intern, FAIR Lab</strong>
+             (Field AI and Robotics) &mdash; since August 2026.</p>
+          <p>Mobile robots and mesh networking, and porting the lab&rsquo;s stack from
+             ROS&nbsp;1 to ROS&nbsp;2.</p>
+          <p class="role" style="margin-top:1.4rem"><strong>Project lead, ROBONEXUS</strong>
+             &mdash; KAIST Micro-Robotics club, since 2025.</p>
+          <p>A mecanum-wheeled capture-the-flag robot that plays its first 45 seconds with
+             no driver. I designed the machine, built the simulation it was developed in,
+             and raised the <strong>&#8361;6,000,000</strong> that paid for it.</p>
+          <ul class="now-facts">
+            <li>KAIST &mdash; Mechanical + Electrical Engineering, expected Feb 2029</li>
+            <li>Micro-Robotics club (MR) since March 2025</li>
+            <li>KAIST Ambassador &mdash; presented KAIST back home in Saudi Arabia</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -497,10 +489,13 @@ def main():
     # "Currently" block out of the dossier and rebuild in the order a reviewer
     # actually wants: what I am doing now, then the work, then the history.
     head, hero, montage, journey, work, dossier, tail = out
-    marker = '\n  <section class="section" id="skills"'
-    cut = dossier.index(marker)
-    now_block, rest = dossier[:cut], dossier[cut:]
-    html = '\n'.join([head, hero, montage, now_block, work, journey, rest, tail])
+    skills_at = dossier.index('\n  <section class="section" id="skills"')
+    personal_at = dossier.index('\n  <section class="section" id="personal"')
+    now_block = dossier[:skills_at]
+    skills = dossier[skills_at:personal_at]
+    rest = dossier[personal_at:]
+    # what I am doing, what I can do, what I built, then how I got here
+    html = '\n'.join([head, hero, montage, now_block, work, skills, journey, rest, tail])
     open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8', newline='\n').write(html)
     print('wrote index.html  %.1f KB' % (len(html) / 1024))
 
