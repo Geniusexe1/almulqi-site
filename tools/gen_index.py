@@ -572,6 +572,10 @@ def main():
     assert not left, 'unresolved content tokens: %s' % left
     open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8', newline='\n').write(html)
     print('wrote index.html  %.1f KB' % (len(html) / 1024))
+    # cache-bust the CSS/JS links, or returning visitors pair new HTML with an
+    # hour-old stylesheet
+    import stamp
+    stamp.main()
 
 
 main()
