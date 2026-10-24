@@ -87,7 +87,7 @@
         <div>
           <h2>AL MULQI</h2>
           <p class="hero-where">Mechanical + Electrical Engineering &middot; KAIST, Daejeon &middot; Robotics research intern at the FAIR Lab</p>
-          <p>I am a robotics engineer specialising in autonomous systems &mdash; perception, navigation and control, working together to finish a mission.</p>
+          <p>I am a robotics engineer specializing in autonomous systems. Utilizing perception, navigation, and control to complete missions and tasks.</p>
         </div>
         <div class="right"><span class="scroll-cue">Scroll</span></div>
       </div>
@@ -545,20 +545,173 @@
   <!-- ============ ACT 5 - DOSSIER ============ -->
   <section class="section act-dossier" id="now" aria-labelledby="now-h">
     <div class="wrap">
-      <div class="now reveal">
+      <div class="section-head reveal">
         <h2 id="now-h"><span class="pulse" aria-hidden="true"></span>Currently</h2>
-        <div>
-          <p class="role"><strong>Robotics research intern, FAIR Lab</strong> (Field AI and Robotics)</p>
-          <p>Relay robots working in tandem over a mesh network, plus porting the lab&rsquo;s stack from ROS&nbsp;1 to ROS&nbsp;2.</p>
-          <p class="role" style="margin-top:1.4rem"><strong>Project lead, ROBONEXUS</strong></p>
-          <p>A mecanum-wheeled CTF robot, autonomous for the first 45 seconds. I designed and created the robot&rsquo;s URDF, built the simulation in Gazebo using ROS, and raised <strong>&#8361;6,000,000</strong> in funding for the project.</p>
-          <ul class="now-facts">
-            <li>KAIST &mdash; Mechanical + Electrical Engineering, expected Feb 2029</li>
+        <span class="ref">Updated October 2026</span>
+      </div>
+      <div class="now-list">
+        <article class="now-item reveal" aria-labelledby="now-robonexus">
+          <div class="now-text">
+            <div class="now-head">
+              <h3 class="now-title" id="now-robonexus">ROBONEXUS</h3>
+              <span class="bundle-role">Project lead</span>
+            </div>
+            <p class="now-status"><span class="pulse" aria-hidden="true"></span>Through to the next stage. The competition is now in March 2027.</p>
+            <p class="now-lead">A capture-the-flag robot that plays the first 45 seconds of every match on its own.</p>
+            <p class="now-body">The first prototype is built and driving. Every motor and both grippers are programmed, and the robot tracks its own position with OpenVINS visual-inertial odometry from a stereo camera and IMU, calibrated with Kalibr. I designed the robot and its URDF, built the Gazebo simulation it was developed in, and raised <strong>&#8361;6,000,000</strong> to fund it.</p>
+            <p class="now-next"><span>Next</span> Moving the mission-control code and motion planner from the simulation onto the robot, starting the second robot, and ordering sheet metal for the competition build.</p>
+            <dl class="title-block">
+              <div><dt>Team</dt><dd>KAIST Micro-Robotics club</dd></div>
+              <div><dt>Localization</dt><dd>OpenVINS, stereo camera + IMU</dd></div>
+              <div><dt>Calibration</dt><dd>Kalibr</dd></div>
+              <div><dt>Funding</dt><dd>&#8361;6,000,000</dd></div>
+            </dl>
+          </div>
+          <div class="now-media" style="--sa:1.3125">
+            <figure class="now-tile" style="--a:0.5625">
+              <span class="shot" style="background-color:#878f92">
+                <video src="assets/video/now-rbnx-drive.mp4" poster="assets/video/now-rbnx-drive-poster.jpg"
+                       width="540" height="960" muted loop playsinline preload="none"
+                       aria-label="The assembled ROBONEXUS prototype driving across a tiled floor on its mecanum wheels, claws hanging from the chain loop."></video>
+              </span>
+              <figcaption>First drive on its mecanum wheels</figcaption>
+            </figure>
+            <figure class="now-tile" style="--a:0.7500">
+              <span class="shot " style="background-color:#636160">
+        <picture>
+          <source type="image/avif" srcset="assets/img/now-rbnx-gripper-480.avif 480w, assets/img/now-rbnx-gripper-960.avif 960w" sizes="(max-width:900px) 45vw, 24vw">
+          <source type="image/webp" srcset="assets/img/now-rbnx-gripper-480.webp 480w, assets/img/now-rbnx-gripper-960.webp 960w" sizes="(max-width:900px) 45vw, 24vw">
+          <img src="assets/img/now-rbnx-gripper-960.jpg" srcset="assets/img/now-rbnx-gripper-480.jpg 480w, assets/img/now-rbnx-gripper-960.jpg 960w" sizes="(max-width:900px) 45vw, 24vw"
+               width="960" height="1280" alt="One of the robot's grippers clamped around a white competition flag, wiring and the chain drive visible behind it." loading="lazy" decoding="async" style="object-position:52% 62%">
+        </picture>
+      </span>
+              <figcaption>A gripper closed on a competition flag</figcaption>
+            </figure>
+          </div>
+        </article>
+        <article class="now-item reveal" aria-labelledby="now-fair">
+          <div class="now-text">
+            <div class="now-head">
+              <h3 class="now-title" id="now-fair">FAIR Lab</h3>
+              <span class="bundle-role">Research intern</span>
+            </div>
+            <p class="now-lead">Keeping a robot connected as it drives deep into a building, using other robots as radio relays.</p>
+            <p class="now-body">I set up a Rajant Cardinal mesh network, with Ackermann cars as the relays and the lab&rsquo;s chain robot as the client. I programmed an obstacle-aware model of signal strength (RSSI), calibrated it against our own radios, and tested it on a hospital floor I imported into Gazebo. Getting the chain robot and the relays into one simulation meant bridging mismatched ROS and Gazebo versions; the relays now reach their waypoints to within 2&ndash;8&nbsp;cm.</p>
+            <p class="now-next"><span>Next</span> Making the relays move on their own, following the signal strength to keep the client connected.</p>
+            <dl class="title-block">
+              <div><dt>Lab</dt><dd>Field AI and Robotics, KAIST</dd></div>
+              <div><dt>Radios</dt><dd>Rajant Cardinal mesh</dd></div>
+              <div><dt>Robots</dt><dd>Chain robot client, two Ackermann relays</dd></div>
+              <div><dt>Stack</dt><dd>ROS&nbsp;2, Gazebo, Docker on two NUCs</dd></div>
+            </dl>
+          </div>
+          <div class="now-media" style="--sa:1.3278">
+            <figure class="now-tile" style="--a:0.5778">
+              <span class="shot" style="background-color:#b9bfac">
+                <video src="assets/video/now-fair-relay.mp4" poster="assets/video/now-fair-relay-poster.jpg"
+                       width="364" height="630" muted loop playsinline preload="none"
+                       aria-label="Animated RSSI simulation on a hospital floor plan: the client robot drives down a corridor while two relays trail it and the signal heatmap updates around them."></video>
+              </span>
+              <figcaption>Relays trailing the client through the simulated hospital</figcaption>
+            </figure>
+            <figure class="now-tile" style="--a:0.7500">
+              <span class="shot " style="background-color:#987167">
+        <picture>
+          <source type="image/avif" srcset="assets/img/now-fair-margin-480.avif 480w, assets/img/now-fair-margin-960.avif 960w, assets/img/now-fair-margin-1920.avif 1920w" sizes="(max-width:900px) 45vw, 24vw">
+          <source type="image/webp" srcset="assets/img/now-fair-margin-480.webp 480w, assets/img/now-fair-margin-960.webp 960w, assets/img/now-fair-margin-1920.webp 1920w" sizes="(max-width:900px) 45vw, 24vw">
+          <img src="assets/img/now-fair-margin-960.jpg" srcset="assets/img/now-fair-margin-480.jpg 480w, assets/img/now-fair-margin-960.jpg 960w, assets/img/now-fair-margin-1920.jpg 1920w" sizes="(max-width:900px) 45vw, 24vw"
+               width="3024" height="4032" alt="A connectivity-margin map of a hospital floor plan, red where the signal fails and blue where it holds, with the relay chain drawn from the ground station to the client." loading="lazy" decoding="async" style="object-position:30% 90%">
+        </picture>
+      </span>
+              <figcaption>Where the link holds (blue) and drops (red)</figcaption>
+            </figure>
+          </div>
+        </article>
+        <article class="now-item reveal" aria-labelledby="now-angel">
+          <div class="now-text">
+            <div class="now-head">
+              <h3 class="now-title" id="now-angel">Angel Robotics</h3>
+              <span class="bundle-role">Intern &amp; hackathon</span>
+            </div>
+            <p class="now-lead">A two-armed robot on a cart that gets around by pushing the floor with its arms.</p>
+            <p class="now-body">One month, a team of three, and hardware that had barely left the lab: Angel Robotics&rsquo; new PHACT actuators, which cancel their own friction in real time so the joint delivers clean, measurable torque, driven from an NVIDIA Jetson AGX Orin with 64&nbsp;GB of memory. I worked on the design, assembly and programming: I built the arm&rsquo;s URDF from CAD, taught its motions by imitation learning, and paired the robot with SLAM, using Orbbec depth cameras and NVIDIA&rsquo;s cuVSLAM, to explore and map the space around it. Angel Robotics recognized me for giving the most feedback on their hardware.</p>
+            <dl class="title-block">
+              <div><dt>Compute</dt><dd>NVIDIA Jetson AGX Orin, 64&nbsp;GB</dd></div>
+              <div><dt>Actuators</dt><dd>Angel Robotics PHACT</dd></div>
+              <div><dt>Vision</dt><dd>Orbbec depth cameras, cuVSLAM</dd></div>
+              <div><dt>Team</dt><dd>Three, one month</dd></div>
+            </dl>
+          </div>
+          <div class="now-media" style="--sa:2.4583">
+            <figure class="now-tile" style="--a:0.5625">
+              <span class="shot" style="background-color:#80807d">
+                <video src="assets/video/now-angel-push.mp4" poster="assets/video/now-angel-push-poster.jpg"
+                       width="540" height="960" muted loop playsinline preload="none"
+                       aria-label="One arm of the cart pressing its rubber ball against the floor and pushing, moving the cart."></video>
+              </span>
+              <figcaption>Pushing off the floor</figcaption>
+            </figure>
+            <figure class="now-tile" style="--a:0.5625">
+              <span class="shot" style="background-color:#87837d">
+                <video src="assets/video/now-angel-move.mp4" poster="assets/video/now-angel-move-poster.jpg"
+                       width="540" height="960" muted loop playsinline preload="none"
+                       aria-label="The cart sliding across the floor, driven only by its arms pushing against the ground."></video>
+              </span>
+              <figcaption>Moving the cart</figcaption>
+            </figure>
+            <figure class="now-tile" style="--a:1.3333">
+              <span class="shot " style="background-color:#817e78">
+        <picture>
+          <source type="image/avif" srcset="assets/img/now-angel-cart-480.avif 480w, assets/img/now-angel-cart-960.avif 960w, assets/img/now-angel-cart-1920.avif 1920w" sizes="(max-width:900px) 45vw, 24vw">
+          <source type="image/webp" srcset="assets/img/now-angel-cart-480.webp 480w, assets/img/now-angel-cart-960.webp 960w, assets/img/now-angel-cart-1920.webp 1920w" sizes="(max-width:900px) 45vw, 24vw">
+          <img src="assets/img/now-angel-cart-960.jpg" srcset="assets/img/now-angel-cart-480.jpg 480w, assets/img/now-angel-cart-960.jpg 960w, assets/img/now-angel-cart-1920.jpg 1920w" sizes="(max-width:900px) 45vw, 24vw"
+               width="4032" height="3024" alt="Kneeling beside the dual-arm cart on the hackathon floor: two arms bolted to a flatbed trolley, a monitor and keyboard on the deck." loading="lazy" decoding="async" style="object-position:50% 42%">
+        </picture>
+      </span>
+              <figcaption>On the hackathon floor</figcaption>
+            </figure>
+          </div>
+        </article>
+        <article class="now-item reveal" aria-labelledby="now-ee405">
+          <div class="now-text">
+            <div class="now-head">
+              <h3 class="now-title" id="now-ee405">EE405</h3>
+              <span class="bundle-role">Course project</span>
+            </div>
+            <p class="now-lead">A rover with an arm that finds blocks, picks them up, and drives itself through a course.</p>
+            <p class="now-body">A mecanum-wheeled rover with a six-axis arm. The arm locates blocks by their ArUco markers and grasps them using forward and inverse kinematics. The rover maps the course with SLAM, then drives it with Nav2, which I retuned for its mecanum wheels: omnidirectional MPPI control, A* planning, and a speed cap hidden in the velocity smoother lifted from 0.26 to 0.6&nbsp;m/s.</p>
+            <dl class="title-block">
+              <div><dt>Course</dt><dd>AI &amp; Vision for Robotics, Electronics Design Lab</dd></div>
+              <div><dt>Robot</dt><dd>Hiwonder JetRover, six-axis arm</dd></div>
+              <div><dt>Perception</dt><dd>ArUco markers, FK/IK grasping</dd></div>
+              <div><dt>Navigation</dt><dd>SLAM, Nav2 with MPPI and A*</dd></div>
+            </dl>
+          </div>
+          <div class="now-media" style="--sa:2.3403">
+            <figure class="now-tile" style="--a:0.5625">
+              <span class="shot" style="background-color:#7a7e75">
+                <video src="assets/video/now-ee405-grasp.mp4" poster="assets/video/now-ee405-grasp-poster.jpg"
+                       width="540" height="960" muted loop playsinline preload="none"
+                       aria-label="A green six-axis arm on a mecanum rover reaching down to a table and closing its gripper on a small block marked with an ArUco tag."></video>
+              </span>
+              <figcaption>Grasping an ArUco-tagged block</figcaption>
+            </figure>
+            <figure class="now-tile" style="--a:1.7778">
+              <span class="shot" style="background-color:#8e8b88">
+                <video src="assets/video/now-ee405-nav.mp4" poster="assets/video/now-ee405-nav-poster.jpg"
+                       width="960" height="540" muted loop playsinline preload="none"
+                       aria-label="The rover driving itself through an S-shaped course of white panels on a chequered floor."></video>
+              </span>
+              <figcaption>Driving the course on its own</figcaption>
+            </figure>
+          </div>
+        </article>
+      </div>
+      <ul class="now-facts reveal">
+        <li>KAIST &mdash; Mechanical + Electrical Engineering, expected Feb 2029</li>
             <li>Micro-Robotics club (MR) since March 2025</li>
             <li>KAIST Ambassador &mdash; presented KAIST back home in Saudi Arabia</li>
-          </ul>
-        </div>
-      </div>
+      </ul>
     </div>
   </section>
 
@@ -568,7 +721,7 @@
     <div class="wrap">
       <div class="section-head reveal">
         <h2 id="work-h">The work</h2>
-        <span class="ref">Four builds &middot; 2025&ndash;2026</span>
+        <span class="ref">2025&ndash;2026</span>
       </div>
       <div class="bundles">
       <a class="bundle reveal" href="projects/robonexus.html">
@@ -577,7 +730,7 @@
             <h3 class="bundle-title">ROBONEXUS</h3>
             <span class="bundle-role">Project lead</span><span class="bundle-now">Currently</span>
           </div>
-          <p>A mecanum-wheeled robot for a capture-the-flag competition: collect flags, cross a barrier through a 600&nbsp;mm gate, deliver them &mdash; the first 45 seconds with no driver. I designed the machine, built the simulation, and trained the flag detector on 5,001 synthetic renders because no footage of the venue exists.</p>
+          <p>A mecanum-wheeled robot for a CTF competition: secure flags on your side or steal your opponent's flags. The initial 45 seconds are autonomous. I designed the robot, built the simulation, and trained the flag detector on 5,000+ synthetic renders on Unity.</p>
           <span class="more">Read the case study</span>
         </div>
         <div class="cluster">
@@ -599,10 +752,11 @@
       <a class="bundle reveal" href="projects/autonomous-drone.html">
         <div>
           <div class="project-head">
-            <h3 class="bundle-title">Autonomous drone</h3>
+            <h3 class="bundle-title">Autonomous Drone</h3>
             <span class="bundle-role">EE478</span>
           </div>
-          <p>A quadrotor that flies a whole mission alone: read a riddle, hand it to a language model, pick the gate the answer points to, avoid what is in the way, then find one storefront from the air and land on it. Knowing its own altitude turned out to be the hard part.</p>
+          <p>A quadrotor equipped with 2x Intel RealSense + Nvidia Orin Nano to achieve local on-board autonomous flight. The mission had the drone read a riddle, hand it to a language model, pick the gate the answer points to, avoid what is in the way, then find the correct target location and land on it. 
+</p>
           <span class="more">Read the case study</span>
         </div>
         <div class="cluster">
@@ -701,9 +855,10 @@
       <div class="skills">
         <div class="skill reveal"><h3>Robotics &amp; autonomy</h3><ul>
           <li>ROS 1</li><li>ROS 2</li><li>Gazebo</li><li>URDF / xacro</li><li>SLAM</li>
-          <li>Visual odometry</li><li>EKF sensor fusion</li><li>A* planning</li><li>PID control</li><li>TF</li></ul></div>
+          <li>Visual-inertial odometry (OpenVINS)</li><li>EKF sensor fusion</li><li>Nav2 (MPPI, A*)</li><li>PID control</li><li>TF</li>
+          <li>Forward / inverse kinematics</li><li>Imitation learning</li><li>Mesh networking (Rajant)</li></ul></div>
         <div class="skill reveal"><h3>Perception &amp; ML</h3><ul>
-          <li>PyTorch</li><li>YOLO</li><li>OpenCV</li><li>Stereo depth</li><li>AprilTag</li>
+          <li>PyTorch</li><li>YOLO</li><li>OpenCV</li><li>Stereo depth</li><li>AprilTag</li><li>ArUco</li><li>Camera–IMU calibration (Kalibr)</li>
           <li>Synthetic data (Unity Perception)</li><li>ONNX</li><li>TensorRT</li></ul></div>
         <div class="skill reveal"><h3>Programming</h3><ul>
           <li>Python</li><li>C</li><li>Bash</li><li>NumPy</li><li>Pandas</li><li>React</li></ul></div>

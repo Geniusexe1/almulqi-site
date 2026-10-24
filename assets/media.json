@@ -1158,5 +1158,160 @@
   "caption": null,
   "alt": "Plan view render of the ROBONEXUS robot.",
   "use": "project:robonexus"
+ },
+ "now-angel-cart": {
+  "kind": "image",
+  "w": 4032,
+  "h": 3024,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#817e78",
+  "pos": [
+   50,
+   42
+  ],
+  "alt": "Kneeling beside the dual-arm cart on the hackathon floor: two arms bolted to a flatbed trolley, a monitor and keyboard on the deck.",
+  "caption": null,
+  "use": "now:angel"
+ },
+ "now-angel-arms": {
+  "kind": "image",
+  "w": 4284,
+  "h": 5712,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#7e7d7b",
+  "pos": [
+   39,
+   48
+  ],
+  "alt": "The cart from above: two black robot arms on a flatbed trolley, each ending in a white rubber ball.",
+  "caption": null,
+  "use": "now:angel"
+ },
+ "now-fair-margin": {
+  "kind": "image",
+  "w": 3024,
+  "h": 4032,
+  "widths": [
+   480,
+   960,
+   1920
+  ],
+  "avg": "#987167",
+  "pos": [
+   30,
+   90
+  ],
+  "alt": "A connectivity-margin map of a hospital floor plan, red where the signal fails and blue where it holds, with the relay chain drawn from the ground station to the client.",
+  "caption": null,
+  "use": "now:fair"
+ },
+ "now-ee405-grasp": {
+  "kind": "video",
+  "w": 540,
+  "h": 960,
+  "avg": "#7a7e75",
+  "pos": [
+   50,
+   42
+  ],
+  "bytes": 1163455,
+  "alt": "A green six-axis arm on a mecanum rover reaching down to a table and closing its gripper on a small block marked with an ArUco tag.",
+  "caption": null,
+  "use": "now:ee405"
+ },
+ "now-ee405-nav": {
+  "kind": "video",
+  "w": 960,
+  "h": 540,
+  "avg": "#8e8b88",
+  "pos": [
+   50,
+   42
+  ],
+  "bytes": 2235258,
+  "alt": "The rover driving itself through an S-shaped course of white panels on a chequered floor.",
+  "caption": null,
+  "use": "now:ee405"
+ },
+ "now-angel-push": {
+  "kind": "video",
+  "w": 540,
+  "h": 960,
+  "avg": "#80807d",
+  "pos": [
+   50,
+   42
+  ],
+  "bytes": 987260,
+  "alt": "One arm of the cart pressing its rubber ball against the floor and pushing, moving the cart.",
+  "caption": null,
+  "use": "now:angel"
+ },
+ "now-angel-move": {
+  "kind": "video",
+  "w": 540,
+  "h": 960,
+  "avg": "#87837d",
+  "pos": [
+   50,
+   42
+  ],
+  "bytes": 628752,
+  "alt": "The cart sliding across the floor, driven only by its arms pushing against the ground.",
+  "caption": null,
+  "use": "now:angel"
+ },
+ "now-fair-relay": {
+  "kind": "video",
+  "w": 364,
+  "h": 630,
+  "avg": "#b9bfac",
+  "pos": [
+   50,
+   42
+  ],
+  "bytes": 233271,
+  "alt": "Animated RSSI simulation on a hospital floor plan: the client robot drives down a corridor while two relays trail it and the signal heatmap updates around them.",
+  "caption": null,
+  "use": "now:fair"
+ },
+ "now-rbnx-gripper": {
+  "kind": "image",
+  "w": 960,
+  "h": 1280,
+  "widths": [
+   480,
+   960
+  ],
+  "avg": "#636160",
+  "pos": [
+   52,
+   62
+  ],
+  "alt": "One of the robot's grippers clamped around a white competition flag, wiring and the chain drive visible behind it.",
+  "caption": null,
+  "use": "now:robonexus"
+ },
+ "now-rbnx-drive": {
+  "kind": "video",
+  "w": 540,
+  "h": 960,
+  "avg": "#878f92",
+  "pos": [
+   50,
+   42
+  ],
+  "bytes": 1918313,
+  "alt": "The assembled ROBONEXUS prototype driving across a tiled floor on its mecanum wheels, claws hanging from the chain loop.",
+  "caption": null,
+  "use": "now:robonexus"
  }
 }

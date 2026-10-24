@@ -52,7 +52,7 @@
 
   <section class="case-hero">
     <div class="wrap">
-      <p class="label lift" style="--delay:80ms"><a href="../#work" style="color:inherit">Work</a> / Micro-Robotics club / 2025—2026</p>
+      <p class="label lift" style="--delay:80ms"><a href="../#work" style="color:inherit">Work</a> / Micro-Robotics club / 2025—2027</p>
       <h1 class="lift" style="--delay:180ms">ROBONEXUS</h1>
       <p class="lede lift" style="--delay:300ms">
         A mecanum-wheeled robot for a capture-the-flag competition, and the software
@@ -65,7 +65,7 @@
         <div><dt>My role</dt><dd>Project lead — mechanical design, simulation, perception</dd></div>
         <div><dt>Team</dt><dd>KAIST Micro-Robotics club (MR)</dd></div>
         <div><dt>Funding</dt><dd>₩6,000,000, secured on proposal</dd></div>
-        <div><dt>Status</dt><dd>In development</dd></div>
+        <div><dt>Status</dt><dd>Prototype built; through to the next stage, competition in March 2027</dd></div>
       </dl>
     </div>
   </section>
@@ -123,6 +123,26 @@
           top of that sits the autonomy: an A* planner over a map of the arena, a
           stereo camera for finding and ranging flags, and a state machine that decides
           what to go for.
+        </p>
+
+        <h2 class="reveal">Where it stands</h2>
+        <p>
+          The team is through to the next stage of the competition, which has moved
+          to <strong>March 2027</strong>. The first prototype is built and driving:
+          every motor is programmed, and so are both grippers.
+        </p>
+        <p>
+          The robot now knows where it is without the simulator telling it. It runs
+          <strong>OpenVINS</strong> visual-inertial odometry on a stereo camera and an
+          IMU, calibrated together with Kalibr. On the real robot it comes out about
+          2% short on distance, with roughly 0.2&nbsp;m of error after a 7&nbsp;m drive,
+          which is good enough to go on with. SVO was tried first and dropped because
+          it lost track once the robot moved.
+        </p>
+        <p>
+          Next, the mission-control code and the motion planner move from the
+          simulation onto the robot, work starts on the second robot, and the sheet
+          metal for the competition build gets ordered.
         </p>
 
         <h2 class="reveal">Key technical decisions</h2>
@@ -252,6 +272,15 @@
           </dl>
         </div>
         <div class="spec reveal">
+          <h3>Localization</h3>
+          <dl>
+            <div class="row"><dt>Method</dt><span class="fill"></span><dd>OpenVINS VIO</dd></div>
+            <div class="row"><dt>Sensors</dt><span class="fill"></span><dd>stereo + IMU</dd></div>
+            <div class="row"><dt>Calibration</dt><span class="fill"></span><dd>Kalibr</dd></div>
+            <div class="row"><dt>Drift</dt><span class="fill"></span><dd>~0.2 m / 7 m</dd></div>
+          </dl>
+        </div>
+        <div class="spec reveal">
           <h3>Match</h3>
           <dl>
             <div class="row"><dt>Duration</dt><span class="fill"></span><dd>3 min</dd></div>
@@ -273,6 +302,22 @@
         <span class="ref">Photos &amp; video</span>
       </div>
       <div class="media-grid clip-grid">
+        <figure class="clip reveal">
+    <video src="../assets/video/now-rbnx-drive.mp4" poster="../assets/video/now-rbnx-drive-poster.jpg"
+           width="540" height="960" muted loop playsinline preload="none"
+           aria-label="The assembled ROBONEXUS prototype driving across a tiled floor on its mecanum wheels, claws hanging from the chain loop." style="background-color:#878f92"></video>
+    <figcaption>The first prototype, built and driving.</figcaption>
+  </figure>
+        <figure class="media reveal " data-scrub>
+    <picture>
+      <source type="image/avif" srcset="../assets/img/now-rbnx-gripper-480.avif 480w, ../assets/img/now-rbnx-gripper-960.avif 960w" sizes="(max-width:900px) 92vw, 46vw">
+      <source type="image/webp" srcset="../assets/img/now-rbnx-gripper-480.webp 480w, ../assets/img/now-rbnx-gripper-960.webp 960w" sizes="(max-width:900px) 92vw, 46vw">
+      <img src="../assets/img/now-rbnx-gripper-960.jpg" srcset="../assets/img/now-rbnx-gripper-480.jpg 480w, ../assets/img/now-rbnx-gripper-960.jpg 960w" sizes="(max-width:900px) 92vw, 46vw"
+           width="960" height="1280" alt="One of the robot's grippers clamped around a white competition flag, wiring and the chain drive visible behind it." loading="lazy" decoding="async"
+           style="background-color:#636160">
+    </picture>
+    <figcaption>A gripper closed on a real competition flag.</figcaption>
+  </figure>
         <figure class="clip reveal">
     <video src="../assets/video/robonexus-unity.mp4" poster="../assets/video/robonexus-unity-poster.jpg"
            width="540" height="960" muted loop playsinline preload="none"

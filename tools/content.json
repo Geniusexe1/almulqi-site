@@ -1,18 +1,86 @@
 {
   "_note": "All the editable prose on the landing page. Edit here, or run tools/edit.py for a browser editor with a live preview. gen_index.py reads this file, so nothing else needs touching.",
   "hero": {
-    "role": "I am a robotics engineer specialising in autonomous systems &mdash; perception, navigation and control, working together to finish a mission.",
+    "role": "I am a robotics engineer specializing in autonomous systems. Utilizing perception, navigation, and control to complete missions and tasks.",
     "where": "Mechanical + Electrical Engineering &middot; KAIST, Daejeon &middot; Robotics research intern at the FAIR Lab",
     "surname": "AL MULQI"
   },
   "now": {
     "heading": "Currently",
-    "fair_title": "Robotics research intern, FAIR Lab",
-    "fair_suffix": "(Field AI and Robotics)",
-    "fair_body": "Relay robots working in tandem over a mesh network, plus porting the lab&rsquo;s stack from ROS&nbsp;1 to ROS&nbsp;2.",
-    "rbnx_title": "Project lead, ROBONEXUS",
-    "rbnx_suffix": "",
-    "rbnx_body": "A mecanum-wheeled CTF robot, autonomous for the first 45 seconds. I designed and created the robot&rsquo;s URDF, built the simulation in Gazebo using ROS, and raised <strong>&#8361;6,000,000</strong> in funding for the project.",
+    "ref": "Updated October 2026",
+    "robonexus": {
+      "title": "ROBONEXUS",
+      "role": "Project lead",
+      "status": "Through to the next stage. The competition is now in March 2027.",
+      "summary": "A capture-the-flag robot that plays the first 45 seconds of every match on its own.",
+      "body": "The first prototype is built and driving. Every motor and both grippers are programmed, and the robot tracks its own position with OpenVINS visual-inertial odometry from a stereo camera and IMU, calibrated with Kalibr. I designed the robot and its URDF, built the Gazebo simulation it was developed in, and raised <strong>&#8361;6,000,000</strong> to fund it.",
+      "next": "Moving the mission-control code and motion planner from the simulation onto the robot, starting the second robot, and ordering sheet metal for the competition build.",
+      "specs": [
+        "Team|KAIST Micro-Robotics club",
+        "Localization|OpenVINS, stereo camera + IMU",
+        "Calibration|Kalibr",
+        "Funding|&#8361;6,000,000"
+      ],
+      "captions": [
+        "First drive on its mecanum wheels",
+        "A gripper closed on a competition flag"
+      ]
+    },
+    "fair": {
+      "title": "FAIR Lab",
+      "role": "Research intern",
+      "status": "",
+      "summary": "Keeping a robot connected as it drives deep into a building, using other robots as radio relays.",
+      "body": "I set up a Rajant Cardinal mesh network, with Ackermann cars as the relays and the lab&rsquo;s chain robot as the client. I programmed an obstacle-aware model of signal strength (RSSI), calibrated it against our own radios, and tested it on a hospital floor I imported into Gazebo. Getting the chain robot and the relays into one simulation meant bridging mismatched ROS and Gazebo versions; the relays now reach their waypoints to within 2&ndash;8&nbsp;cm.",
+      "next": "Making the relays move on their own, following the signal strength to keep the client connected.",
+      "specs": [
+        "Lab|Field AI and Robotics, KAIST",
+        "Radios|Rajant Cardinal mesh",
+        "Robots|Chain robot client, two Ackermann relays",
+        "Stack|ROS&nbsp;2, Gazebo, Docker on two NUCs"
+      ],
+      "captions": [
+        "Relays trailing the client through the simulated hospital",
+        "Where the link holds (blue) and drops (red)"
+      ]
+    },
+    "angel": {
+      "title": "Angel Robotics",
+      "role": "Intern &amp; hackathon",
+      "status": "",
+      "summary": "A two-armed robot on a cart that gets around by pushing the floor with its arms.",
+      "body": "One month, a team of three, and hardware that had barely left the lab: Angel Robotics&rsquo; new PHACT actuators, which cancel their own friction in real time so the joint delivers clean, measurable torque, driven from an NVIDIA Jetson AGX Orin with 64&nbsp;GB of memory. I worked on the design, assembly and programming: I built the arm&rsquo;s URDF from CAD, taught its motions by imitation learning, and paired the robot with SLAM, using Orbbec depth cameras and NVIDIA&rsquo;s cuVSLAM, to explore and map the space around it. Angel Robotics recognized me for giving the most feedback on their hardware.",
+      "next": "",
+      "specs": [
+        "Compute|NVIDIA Jetson AGX Orin, 64&nbsp;GB",
+        "Actuators|Angel Robotics PHACT",
+        "Vision|Orbbec depth cameras, cuVSLAM",
+        "Team|Three, one month"
+      ],
+      "captions": [
+        "Pushing off the floor",
+        "Moving the cart",
+        "On the hackathon floor"
+      ]
+    },
+    "ee405": {
+      "title": "EE405",
+      "role": "Course project",
+      "status": "",
+      "summary": "A rover with an arm that finds blocks, picks them up, and drives itself through a course.",
+      "body": "A mecanum-wheeled rover with a six-axis arm. The arm locates blocks by their ArUco markers and grasps them using forward and inverse kinematics. The rover maps the course with SLAM, then drives it with Nav2, which I retuned for its mecanum wheels: omnidirectional MPPI control, A* planning, and a speed cap hidden in the velocity smoother lifted from 0.26 to 0.6&nbsp;m/s.",
+      "next": "",
+      "specs": [
+        "Course|AI &amp; Vision for Robotics, Electronics Design Lab",
+        "Robot|Hiwonder JetRover, six-axis arm",
+        "Perception|ArUco markers, FK/IK grasping",
+        "Navigation|SLAM, Nav2 with MPPI and A*"
+      ],
+      "captions": [
+        "Grasping an ArUco-tagged block",
+        "Driving the course on its own"
+      ]
+    },
     "facts": [
       "KAIST &mdash; Mechanical + Electrical Engineering, expected Feb 2029",
       "Micro-Robotics club (MR) since March 2025",
@@ -21,16 +89,16 @@
   },
   "work": {
     "heading": "The work",
-    "ref": "Four builds &middot; 2025&ndash;2026",
+    "ref": "2025&ndash;2026",
     "robonexus": {
       "title": "ROBONEXUS",
       "role": "Project lead",
-      "text": "A mecanum-wheeled robot for a capture-the-flag competition: collect flags, cross a barrier through a 600&nbsp;mm gate, deliver them &mdash; the first 45 seconds with no driver. I designed the machine, built the simulation, and trained the flag detector on 5,001 synthetic renders because no footage of the venue exists."
+      "text": "A mecanum-wheeled robot for a CTF competition: secure flags on your side or steal your opponent's flags. The initial 45 seconds are autonomous. I designed the robot, built the simulation, and trained the flag detector on 5,000+ synthetic renders on Unity."
     },
     "drone": {
-      "title": "Autonomous drone",
+      "title": "Autonomous Drone",
       "role": "EE478",
-      "text": "A quadrotor that flies a whole mission alone: read a riddle, hand it to a language model, pick the gate the answer points to, avoid what is in the way, then find one storefront from the air and land on it. Knowing its own altitude turned out to be the hard part."
+      "text": "A quadrotor equipped with 2x Intel RealSense + Nvidia Orin Nano to achieve local on-board autonomous flight. The mission had the drone read a riddle, hand it to a language model, pick the gate the answer points to, avoid what is in the way, then find the correct target location and land on it. \n"
     },
     "car": {
       "title": "Self-driving racing car",

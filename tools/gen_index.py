@@ -270,6 +270,72 @@ TAIL = '''
 </html>'''
 
 
+# What each Currently entry shows, in content.json order. Media lives here, not
+# in content.json, because it is markup rather than prose; the captions for it
+# are prose, so they live in content.json in the same order.
+NOW = [('robonexus', ['now-rbnx-drive', 'now-rbnx-gripper']),
+       ('fair',      ['now-fair-relay', 'now-fair-margin']),
+       ('angel',     ['now-angel-push', 'now-angel-move', 'now-angel-cart']),
+       ('ee405',     ['now-ee405-grasp', 'now-ee405-nav'])]
+
+
+def now_tile(name, cap):
+    """One captioned tile in a Currently media row. Each tile grows by its own
+    aspect ratio, so every tile in a row is the same height and nothing crops."""
+    e = M[name]
+    if e['kind'] == 'video':
+        inner = ('<span class="shot" style="background-color:%s">\n'
+                 '                <video src="assets/video/%s.mp4" poster="assets/video/%s-poster.jpg"\n'
+                 '                       width="%d" height="%d" muted loop playsinline preload="none"\n'
+                 '                       aria-label="%s"></video>\n'
+                 '              </span>' % (e['avg'], name, name, e['w'], e['h'], esc(e['alt'])))
+    else:
+        inner = pic(name, '(max-width:900px) 45vw, 24vw')
+    return ('<figure class="now-tile" style="--a:%.4f">\n'
+            '              %s\n'
+            '              <figcaption>%s</figcaption>\n'
+            '            </figure>' % (e['w'] / e['h'], inner, cap))
+
+
+def now_html():
+    out = []
+    for key, media in NOW:
+        k = 'now.%s.' % key
+        status = ('\n            <p class="now-status"><span class="pulse" aria-hidden="true"></span>@@%sstatus@@</p>' % k
+                  if T(k + 'status') else '')
+        nxt = ('\n            <p class="now-next"><span>Next</span> @@%snext@@</p>' % k
+               if T(k + 'next') else '')
+        # a drawing title block: true facts in labelled cells, for skimming
+        specs = '\n              '.join(
+            '<div><dt>%s</dt><dd>%s</dd></div>' % tuple(s.split('|', 1))
+            for s in T(k + 'specs'))
+        caps = T(k + 'captions')
+        tiles = '\n            '.join(now_tile(n, caps[i] if i < len(caps) else '')
+                                      for i, n in enumerate(media))
+        # the row's total aspect ratio caps its width, so a row of tall
+        # portrait clips does not grow taller than a row of wide ones
+        sa = sum(M[n]['w'] / M[n]['h'] for n in media)
+        out.append(
+            '<article class="now-item reveal" aria-labelledby="now-{key}">\n'
+            '          <div class="now-text">\n'
+            '            <div class="now-head">\n'
+            '              <h3 class="now-title" id="now-{key}">@@{k}title@@</h3>\n'
+            '              <span class="bundle-role">@@{k}role@@</span>\n'
+            '            </div>{status}\n'
+            '            <p class="now-lead">@@{k}summary@@</p>\n'
+            '            <p class="now-body">@@{k}body@@</p>{nxt}\n'
+            '            <dl class="title-block">\n'
+            '              {specs}\n'
+            '            </dl>\n'
+            '          </div>\n'
+            '          <div class="now-media" style="--sa:{sa:.4f}">\n'
+            '            {tiles}\n'
+            '          </div>\n'
+            '        </article>'.format(key=key, k=k, status=status, nxt=nxt,
+                                       specs=specs, sa=sa, tiles=tiles))
+    return '\n        '.join(out)
+
+
 def bundle_html(b):
     cl = '\n        '.join(cluster_item(n, c) for n, c in b['cluster'])
     live = ('<span class="bundle-now">Currently</span>' if b.get('now') else '')
@@ -406,18 +472,16 @@ def main():
   <!-- ============ ACT 5 - DOSSIER ============ -->
   <section class="section act-dossier" id="now" aria-labelledby="now-h">
     <div class="wrap">
-      <div class="now reveal">
+      <div class="section-head reveal">
         <h2 id="now-h"><span class="pulse" aria-hidden="true"></span>@@now.heading@@</h2>
-        <div>
-          <p class="role"><strong>@@now.fair_title@@</strong> @@now.fair_suffix@@</p>
-          <p>@@now.fair_body@@</p>
-          <p class="role" style="margin-top:1.4rem"><strong>@@now.rbnx_title@@</strong> @@now.rbnx_suffix@@</p>
-          <p>@@now.rbnx_body@@</p>
-          <ul class="now-facts">
-            @@now.facts|li@@
-          </ul>
-        </div>
+        <span class="ref">@@now.ref@@</span>
       </div>
+      <div class="now-list">
+        %s
+      </div>
+      <ul class="now-facts reveal">
+        @@now.facts|li@@
+      </ul>
     </div>
   </section>
 
@@ -430,9 +494,10 @@ def main():
       <div class="skills">
         <div class="skill reveal"><h3>Robotics &amp; autonomy</h3><ul>
           <li>ROS 1</li><li>ROS 2</li><li>Gazebo</li><li>URDF / xacro</li><li>SLAM</li>
-          <li>Visual odometry</li><li>EKF sensor fusion</li><li>A* planning</li><li>PID control</li><li>TF</li></ul></div>
+          <li>Visual-inertial odometry (OpenVINS)</li><li>EKF sensor fusion</li><li>Nav2 (MPPI, A*)</li><li>PID control</li><li>TF</li>
+          <li>Forward / inverse kinematics</li><li>Imitation learning</li><li>Mesh networking (Rajant)</li></ul></div>
         <div class="skill reveal"><h3>Perception &amp; ML</h3><ul>
-          <li>PyTorch</li><li>YOLO</li><li>OpenCV</li><li>Stereo depth</li><li>AprilTag</li>
+          <li>PyTorch</li><li>YOLO</li><li>OpenCV</li><li>Stereo depth</li><li>AprilTag</li><li>ArUco</li><li>Camera–IMU calibration (Kalibr)</li>
           <li>Synthetic data (Unity Perception)</li><li>ONNX</li><li>TensorRT</li></ul></div>
         <div class="skill reveal"><h3>Programming</h3><ul>
           <li>Python</li><li>C</li><li>Bash</li><li>NumPy</li><li>Pandas</li><li>React</li></ul></div>
@@ -487,7 +552,7 @@ def main():
         </ul>
       </div>
     </div>
-  </section>''' % life)
+  </section>''' % (now_html(), life))
 
     A(TAIL)
 

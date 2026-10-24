@@ -357,6 +357,30 @@
       "name": "strip-cat",
       "use": "montage",
       "alt": "A cat sitting on a tiled floor, looking up at the camera."
+    },
+    {
+      "src": "now/IMG_2348.jpeg",
+      "name": "now-angel-cart",
+      "use": "now:angel",
+      "alt": "Kneeling beside the dual-arm cart on the hackathon floor: two arms bolted to a flatbed trolley, a monitor and keyboard on the deck."
+    },
+    {
+      "src": "now/IMG_2334.jpeg",
+      "name": "now-angel-arms",
+      "use": "now:angel",
+      "alt": "The cart from above: two black robot arms on a flatbed trolley, each ending in a white rubber ball."
+    },
+    {
+      "src": "now/IMG_2353.JPG.jpeg",
+      "name": "now-fair-margin",
+      "use": "now:fair",
+      "alt": "A connectivity-margin map of a hospital floor plan, red where the signal fails and blue where it holds, with the relay chain drawn from the ground station to the client."
+    },
+    {
+      "src": "now/rbnx-gripper.jpeg",
+      "name": "now-rbnx-gripper",
+      "use": "now:robonexus",
+      "alt": "One of the robot's grippers clamped around a white competition flag, wiring and the chain drive visible behind it."
     }
   ],
   "videos": [
@@ -472,6 +496,69 @@
       "alt": "The drone flying the mission course indoors: past traffic cones, through a truss gate marked with AprilTags, towards a row of mock storefronts.",
       "caption": "The course: cones to avoid, a tagged gate to pick, and four storefronts to tell apart.",
       "height": 900
+    },
+    {
+      "src": "now/IMG_2304.MOV",
+      "name": "now-ee405-grasp",
+      "use": "now:ee405",
+      "trim": [
+        20,
+        14
+      ],
+      "alt": "A green six-axis arm on a mecanum rover reaching down to a table and closing its gripper on a small block marked with an ArUco tag."
+    },
+    {
+      "src": "now/_talkv_dJMcbquAqKX_NdJkrp3YJCyncED2ukQ3C0_talkv_high.MP4",
+      "name": "now-ee405-nav",
+      "use": "now:ee405",
+      "trim": [
+        0,
+        26
+      ],
+      "height": 540,
+      "alt": "The rover driving itself through an S-shaped course of white panels on a chequered floor."
+    },
+    {
+      "src": "now/IMG_2345.MOV",
+      "name": "now-angel-push",
+      "use": "now:angel",
+      "trim": [
+        0,
+        14
+      ],
+      "alt": "One arm of the cart pressing its rubber ball against the floor and pushing, moving the cart."
+    },
+    {
+      "src": "now/IMG_2347.MOV",
+      "name": "now-angel-move",
+      "use": "now:angel",
+      "trim": [
+        1,
+        6
+      ],
+      "alt": "The cart sliding across the floor, driven only by its arms pushing against the ground."
+    },
+    {
+      "src": "now/IMG_2285.GIF",
+      "name": "now-fair-relay",
+      "use": "now:fair",
+      "trim": [
+        0,
+        12
+      ],
+      "height": 630,
+      "crf": 24,
+      "alt": "Animated RSSI simulation on a hospital floor plan: the client robot drives down a corridor while two relays trail it and the signal heatmap updates around them."
+    },
+    {
+      "src": "now/rbnx-drive.mp4",
+      "name": "now-rbnx-drive",
+      "use": "now:robonexus",
+      "trim": [
+        8,
+        22
+      ],
+      "alt": "The assembled ROBONEXUS prototype driving across a tiled floor on its mecanum wheels, claws hanging from the chain loop."
     }
   ]
 }

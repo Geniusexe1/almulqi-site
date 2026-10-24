@@ -22,7 +22,7 @@ cd ~/Desktop/almulqi-site
 python3 -m http.server 8000
 ```
 
-Then <http://localhost:8000>. Nothing compiles — save and reload.
+Then [http://localhost:8000](http://localhost:8000). compiles — save and reload.
 
 ## The five acts
 

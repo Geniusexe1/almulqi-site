@@ -111,26 +111,19 @@
 
 .act-montage { padding-block: clamp(3rem, 8vw, 6rem); overflow: hidden; }
 
-/* The row is a viewport-wide strip holding two identical tracks side by side.
-   Translating the pair by exactly one track width returns to the starting
-   picture, so the loop is seamless and there is no end to reach - which is
-   what left a gap at one side on a wide screen. */
+/* The strips pan with the scroll: site.js writes --p (0 -> 1 as the section
+   crosses the screen) and each row slides by it, the two in opposite
+   directions so they read as depth rather than one block sliding. Each row
+   holds its set of photographs twice, so even a TV-wide screen never reaches
+   the end of a row and sees a gap. Percentages are of the doubled row. */
 .montage-row {
   display: flex; width: max-content;
   margin-bottom: 1rem;
-  animation: marquee 150s linear infinite;
 }
-/* different speeds and opposite directions, or the two rows read as one
-   block sliding rather than as depth */
-.montage-row--a { animation-duration: 150s; }
-.montage-row--b { animation-direction: reverse; animation-duration: 195s; }
+.js .montage-row--a { transform: translate3d(calc(-4% + var(--p, 0) * -9%), 0, 0); }
+.js .montage-row--b { transform: translate3d(calc(-30% + var(--p, 0) * 11%), 0, 0); }
 
 .montage-track { display: flex; gap: 1rem; padding-right: 1rem; }
-
-@keyframes marquee {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-50%, 0, 0); }
-}
 
 .montage-row .shot {
   flex: none; width: clamp(150px, 22vw, 280px); aspect-ratio: 3 / 4;
@@ -138,11 +131,7 @@
 }
 .montage-row .shot.wide { width: clamp(220px, 32vw, 420px); aspect-ratio: 4 / 3; }
 
-/* scroll still nudges the scale, but the horizontal travel is the loop's job */
 .js .montage-row .shot { transform: scale(calc(0.94 + var(--p, 0) * 0.06)); }
-
-/* pause while the pointer is over it, so a photo can actually be looked at */
-.act-montage:hover .montage-row { animation-play-state: paused; }
 
 /* ==========================================================================
    ACT 3 — THE JOURNEY
@@ -449,7 +438,8 @@
   .js .hero-name { transform: translate3d(0, -50%, 0); }
   .js .scroll-cue { opacity: 1; }
 
-  .montage-row { animation: none; width: 100%; flex-wrap: wrap; justify-content: center; }
+  .js .montage-row--a, .js .montage-row--b { transform: none; }
+  .montage-row { width: 100%; flex-wrap: wrap; justify-content: center; }
   .montage-row .shot { transform: none; }
   /* one copy is enough when nothing is moving */
   .montage-track[aria-hidden="true"] { display: none; }
