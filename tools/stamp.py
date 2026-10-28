@@ -1,4 +1,4 @@
-"""Tag every stylesheet and script link with a hash of the file it points at.
+"""Tag every stylesheet, script and CV link with a hash of the file it points at.
 
     python3 tools/stamp.py
 
@@ -11,7 +11,7 @@ this after writing index.html; run it by hand after editing a case study.
 import hashlib, os, re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-REF = re.compile(r'((?:href|src)="(?:\.\./|/)?(assets/(?:css|js)/[\w.-]+\.(?:css|js)))(?:\?v=\w+)?"')
+REF = re.compile(r'((?:href|src)="(?:\.\./|/)?(assets/(?:css|js|cv)/[\w.-]+\.(?:css|js|pdf)))(?:\?v=\w+)?"')
 
 
 def digest(rel):
