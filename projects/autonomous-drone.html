@@ -63,8 +63,8 @@
 
       <dl class="case-meta lift" style="--delay:420ms">
         <div><dt>Course</dt><dd>EE478, KAIST</dd></div>
-        <div><dt>Team</dt><dd>Three students, no fixed roles</dd></div>
-        <div><dt>My share</dt><dd>Perception data, calibration, altitude, troubleshooting</dd></div>
+        <div><dt>Team</dt><dd>Three students, led by a teammate, no fixed roles</dd></div>
+        <div><dt>My share</dt><dd>Almost every part, worked on together: odometry, PID control, waypoints, landing, perception, calibration</dd></div>
         <div><dt>Autopilot</dt><dd>PX4 + MAVROS</dd></div>
       </dl>
     </div>
@@ -110,11 +110,16 @@
 
         <h2 class="reveal">What I built</h2>
         <p>
-          The team had no formal roles. My share was the parts everything else stands on:
-          <strong>the training data for the landing detector, the camera calibration, the
-          altitude channel, and a great deal of troubleshooting.</strong>
+          The team had no fixed roles; one teammate led and set the direction, and the
+          work was shared. I worked on almost every part of the stack alongside the other
+          two, including:
         </p>
         <ul>
+          <li>The <strong>odometry</strong>, including the four approaches compared below,
+              each flown and evaluated until semi-direct VO held.</li>
+          <li><strong>PID control</strong> and the global <strong>waypoint mission</strong>.</li>
+          <li>The <strong>landing sequence</strong>: once YOLO identifies the target, a
+              waypoint is placed above it and the drone descends slowly while holding X and Y.</li>
           <li>A <strong>Unity simulation</strong> that generated roughly
               <strong>10,000 labelled images</strong> of the landing targets, and the
               training and fine-tuning of the detector on top of it.</li>
